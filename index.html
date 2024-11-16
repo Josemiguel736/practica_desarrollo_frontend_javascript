@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApiPop</title>
+    <link rel="stylesheet" href="./styles/normalice.css">
+    <link rel="stylesheet" href="./styles/common.css">
+</head>
+<body>
+    <section class="navbar">
+        <h3>ApiPop</h3>        
+            <ul class="items_nav" >
+                <li><a class="item_nav" href="new-article">Nuevo producto</a></li>
+                <li><a class="item_nav" href="login">Login</a></li>
+            </ul> 
+    </section>
+    <section>
+        <div class="container">
+            <div class="filter-content">
+                <form class="filter">
+                    <label class="input label" for="fname">Buscar:</label>
+                    <input class="input" type="text" id="fname" name="fname" value="">
+                    <label class="input label" for="fname">Minimo</label>
+                    <input class="input" type="number" id="fname" name="fmin" value="">
+                    <label class="input label" for="fname">Máximo</label>
+                    <input class="input" type="number" id="fname" name="fmax" value="">
+                    <label class="input label" for="fname">Tags:</label>
+                    <select class="input" id="simple" name="simple">
+                        <option>Banana</option>
+                        <option selected>Cherry</option>
+                        <option>Lemon</option>
+                      </select>
+                    
+                    <input class="input" type="submit" value="Filtrar">
+                  </form>
+            </div>
+            <div class="products">
+                <div class="product">
+                    <img src="./assets/product-photos/no_image.jpg" alt="">
+                    <div>Usuario</div>
+                    <div>400 euros</div>
+                    <div>Compra</div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+</body>
+</html>
