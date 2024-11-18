@@ -6,6 +6,7 @@
     <title>ApiPop</title>
     <link rel="stylesheet" href="./styles/normalice.css">
     <link rel="stylesheet" href="./styles/common.css">
+    <link rel="stylesheet" href="./styles/spinner.css">
 </head>
 <body>
     <section class="navbar">
@@ -34,13 +35,20 @@
                     
                     <input class="input" type="submit" value="Filtrar">
                   </form>
-            </div>
+            </div>          
+            
             <div class="products">
-                <div class="product">
-                    <img src="./assets/product-photos/no_image.jpg" alt="">
-                    <div>Usuario</div>
-                    <div>400 euros</div>
-                    <div>Compra</div>
+                
+                    <script type="module" src="./models/apiPop-controller.js"></script>
+                    
+                    <div class=" product loading-spinner">
+                        <span class="letter">A</span>
+                        <span class="letter">p</span>
+                        <span class="letter">i</span>
+                        <span class="letter">P</span>
+                        <span class="letter">o</span>
+                        <span class="letter">p</span>
+                    </div>
                 </div>
                 
             </div>

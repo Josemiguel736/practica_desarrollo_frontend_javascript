@@ -5,6 +5,7 @@
 
 .navbar{
     color: rgb(10, 141, 255);
+    width: 100%;
     margin: 0 auto;
     width: auto;
     display: flex;
@@ -74,7 +75,7 @@
     flex-direction: column;
     border-radius: 5%;
     overflow: hidden;
-    max-height: 260px;
+    height: 260px;
 }
 .product img {
     max-height: 200px;
