@@ -1,4 +1,3 @@
 .vscode/ 
 practica_final.code-workspace
 code.workspace
-git check-ignore -v practica_final.code-workspace

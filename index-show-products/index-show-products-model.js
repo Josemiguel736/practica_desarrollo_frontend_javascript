@@ -1,8 +1,6 @@
-//API
-
 export async function getProducts() {
     try {
-        //conexion con la api
+        //conexion con la api para obtener productos
         const response = await fetch("http://localhost:8000/api/products")
         
         if(!response.ok){

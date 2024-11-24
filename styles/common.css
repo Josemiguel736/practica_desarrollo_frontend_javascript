@@ -1,10 +1,21 @@
 :root{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    --body-bg-color:rgb(100, 150, 200);
+    --nav-item-color:rgb(75, 55, 255);
+    --nav-logo-color:rgb(10, 141, 255);
+    --nav-bg-color:white;
+    --filter-bg-color:rgb(0, 255, 191);
+    --products-loading-bg-color:rgb(100, 150, 200);
+    --product-background-color:rgb(215, 255, 255);
+    --success-color:rgb(85, 255, 108);
+    --error-color:rgb(255, 53, 53);
 }
 
-
+body{
+    background-color: var(--body-bg-color);
+}
 .navbar{
-    color: rgb(10, 141, 255);
+    color: var(--nav-logo-color);
     width: 100%;
     margin: 0 auto;
     width: auto;
@@ -12,6 +23,7 @@
     align-items: baseline;
     padding: 0 0.5rem;
     border-bottom: solid black 1px;
+    background-color: var(--nav-bg-color);
 }
 
 .items_nav{
@@ -23,7 +35,7 @@
 }
 
 .item_nav{
-    color: rgb(64, 233, 255);
+    color: var(--nav-item-color);
     text-decoration: none;    
 }
 
@@ -32,14 +44,14 @@
     flex-direction: row;
 }
 .filter-content{
-    background-color: rgb(0, 255, 191);    
+    background-color: var(--filter-bg-color);    
     width: 15%;
     min-width: 270px;
 }
 
 .products{    
     padding: 2rem;
-    background-color: rgb(0, 105, 131);    
+    background-color: var(--body-bg-color);    
     width: 85vw;
     min-height: 100vh;
     display: grid;
@@ -49,11 +61,11 @@
     column-gap: 25px;
 }
 
-.products.flex{
+.products.loading{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    background-color: rgb(100, 150, 200);
+    background-color: var(--products-loading-bg-color);
 }
 
 .filter{
@@ -74,9 +86,27 @@
     margin-bottom: 0.2rem;
 }
 
+
+.auth{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin: 20vh auto;
+    text-align: center;    
+    width:  20rem;
+    background-color: var(--product-background-color);
+    }
+.auth form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+.auth input {
+    margin-bottom: 1rem;
+}
 .product{
     padding: 1rem;
-    background-color: rgb(215, 255, 255);
+    background-color: var(--product-background-color);
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -88,4 +118,46 @@
     max-height: 200px;
     border-radius: 5%;
     
+}
+
+.notification.success{
+    text-align: center;
+    display: grid;
+    align-items: center;
+    height: 3rem;
+    background-color: var(--success-color);
+    font-weight: bold;
+   
+}
+
+.notification{
+    text-align: center;
+    display: grid;
+    align-items: center;    
+}
+
+.big.error{
+    height: 3rem;
+    font-weight: bold;
+    background-color: var(--error-color);
+}
+
+.little.error{
+    color: var(--error-color);
+    font-size: small;
+    padding-bottom: 1rem;
+}
+
+.big.success{
+    height: 3rem;
+    font-weight: bold;
+    background-color: var(--success-color);
+}
+
+.little.success{
+    color: var(--success-color);
+}
+
+.hidden{
+    display: none;
 }

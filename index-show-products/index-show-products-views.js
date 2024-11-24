@@ -29,10 +29,3 @@ export const buildNoProducts= ()=>{
     return newProduct
 }
 
-export const buildError= ()=>{
-    
-    const newError = document.createElement('span')
-    newError.innerHTML="Estamos teniendo problemas, por favor intentelo más tarde"
-
-    return newError
-}

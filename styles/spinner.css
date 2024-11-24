@@ -1,12 +1,14 @@
 
 
 .loading-spinner {
+    position: relative;
     display: flex;
     gap: 0.5rem;
     position: relative;
     text-align: center;
     flex-direction: row;
     margin: 0 auto;
+    width: 200px;
 }
 
 .loading-spinner.hidden {

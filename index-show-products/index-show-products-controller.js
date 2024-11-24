@@ -1,11 +1,7 @@
 
-import { buildNoProducts, buildError, buildProduct } from "./index-show-products-views.js"
+import { buildNoProducts,  buildProduct } from "./index-show-products-views.js"
 import { getProducts } from "./index-show-products-model.js"
 import { fireEvent } from "../utils/fireEvent.js"
-
-
-
-    
 
 function drawProducts(products, productContainer){
     //comprueba si hay productos para mostrar 
@@ -24,25 +20,25 @@ function drawProducts(products, productContainer){
     }
 }
 
-
 export async function showProducts(productContainer){
     //Iniciamos la ruleta de carga
-    fireEvent("loading-spinner","spinner","success",productContainer)
-    
-    //la vaciamos
-    productContainer.innerHTML = ""
+    fireEvent("loading-spinner",productContainer)
 
     try {
         //Llamamos a la base de datos y si sale bien a drawProducts
         const products = await getProducts()
-        drawProducts(products,productContainer) //le enviamos el productContainer y una lista de objetos producto
+
+        //vaciamos products container
+        productContainer.innerHTML = ""
+
+        //le enviamos el productContainer y una lista de objetos producto
+        drawProducts(products,productContainer) 
+
+        //Lanzamos una notificación indicando que los productos se cargaron correctamente
+        fireEvent("notification",productContainer,"Productos cargados correctamente","big","success")
 
     } catch (error) {
-        //si sale mal llamamos a 
-        const newError = buildError()
-        productContainer.appendChild(newError)      
-    }finally{
-        fireEvent("loading-spinner","spinner","success",productContainer)
-
+        //Si ha ocurrido un error lanzaremos una notificación al usuario
+        fireEvent("notification",productContainer,`${error}`,"big","error")     
     }
 }
