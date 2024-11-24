@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="./styles/normalice.css">
+    <link rel="stylesheet" href="./styles/common.css">
+    <link rel="stylesheet" href="./styles/spinner.css">
+</head>
+<body>
+    <section class="navbar"> </section>
+    <section class="notification "></section> 
+    <section>
+        <div class="auth">
+        <form>
+            <h3>Crear nuevo producto</h3>
+        <label for="name">Nombre del producto</label>
+        <input type="text" name="name" id="name" required>
+        
+        <label for="description">Descripción del producto</label>
+        <textarea name="description" id="description" cols="30" rows="10" required></textarea>
+        
+        <label for="image">Imágen</label>
+        <input type="text" name="image" id="image">
+        
+        <label for="type-product">Que quieres hacer</label>
+        <select class="input" id="typeProduct" name="type-product">
+            <option selected>Comprar</option>
+            <option>Vender</option>
+        </select>
+        
+        <label for="price" >precio</label>
+        <input type="number" min="0" name="price" id="price" required>
+        
+        <button type="submit">Crear producto</button>
+    </form>
+</div>
+
+    </section>
+    <script type="module" src="create-product.js"></script>
+</body>
+</html>

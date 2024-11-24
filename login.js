@@ -2,6 +2,11 @@
 import { loginController } from "./auth/auth-controller.js";
 import { loadingSpinner } from "./loading-spinner/spinner-controller.js";
 import { sessionController } from "./session/session-controller.js";
+import { isUserLoggedIn } from "./utils/utils.js";
+
+if (isUserLoggedIn()){
+    window.location.href="/"
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     const loginContainer = document.querySelector(".auth"); // El contenedor de la autenticación

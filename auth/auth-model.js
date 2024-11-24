@@ -35,7 +35,7 @@ export async function loginUser(email, password){
     });
     if(!response.ok){
         //si la api da error al crear usuario lanzo un error
-        throw new Error("Error el usuario ya existe")
+        throw new Error("Error el usuario no existe")
     }
     const {accessToken} = await response.json();
     return accessToken

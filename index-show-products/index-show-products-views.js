@@ -6,16 +6,19 @@ export const buildProduct= (product)=>{
         newProduct.innerHTML=`
         <div class="product">
         <img src=${product.image} alt=${product.name}>
-        <div>${product.name}</div>
-        <div>${product.cost} €</div>
-        <div>${product.status}</div>
+        <h3>${product.name}</h3>
+        <span>${product.description}</span>
+        <span>${product.typeProduct}</span>
+        <h4>${product.price} €</h4>
         </div> `
     }else{
         newProduct.innerHTML=`
         <div class="product">
-        <div>${product.name}</div>
-        <div>${product.cost} €</div>
-        <div>${product.status}</div>
+        <img src="assets/product-photos/no_image.jpg" alt=${product.name}>        
+        <h3>${product.name}</h3>
+        <span>${product.description}</span>
+        <span>${product.typeProduct}</span>
+        <h4>${product.price} €</h4>
         </div> `
     }   
     return newProduct

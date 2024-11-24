@@ -6,6 +6,7 @@ import { loginUser } from "./auth-model.js"
 
 
 export function registerUser(registerContainer){
+    
     registerContainer.addEventListener("submit",(event)=>{
         event.preventDefault()
         const userEmailElement = registerContainer.querySelector("#mail")
