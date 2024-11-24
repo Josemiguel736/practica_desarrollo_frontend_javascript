@@ -9,6 +9,10 @@
     margin: 0 auto;
 }
 
+.loading-spinner.hidden {
+    display: none;
+}
+
 .letter {
     font-size: 2rem;
     font-weight: bold;

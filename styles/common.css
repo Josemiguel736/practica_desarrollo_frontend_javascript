@@ -49,6 +49,13 @@
     column-gap: 25px;
 }
 
+.products.flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: rgb(100, 150, 200);
+}
+
 .filter{
     text-align: center;
     display: flex;

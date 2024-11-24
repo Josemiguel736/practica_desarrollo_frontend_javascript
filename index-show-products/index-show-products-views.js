@@ -24,7 +24,15 @@ export const buildProduct= (product)=>{
 export const buildNoProducts= ()=>{
     //creo un nodo con mi html dentro
     const newProduct = document.createElement('span')
-    newProduct.innerHTML="No hay productos"
+    newProduct.innerHTML="No hay productos para mostrar"
 
     return newProduct
+}
+
+export const buildError= ()=>{
+    
+    const newError = document.createElement('span')
+    newError.innerHTML="Estamos teniendo problemas, por favor intentelo más tarde"
+
+    return newError
 }
