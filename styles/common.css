@@ -43,6 +43,15 @@ body{
     display: flex;
     flex-direction: row;
 }
+
+.container-detail{           
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    
+}
+
 .filter-content{
     background-color: var(--filter-bg-color);    
     width: 15%;
@@ -61,7 +70,16 @@ body{
     column-gap: 25px;
 }
 
+a{
+    text-decoration: none;    
+}
+
+.navbar a h3{
+    color: var(--nav-item-color); 
+}
+
 .product{
+    margin-top: 3rem;
     padding: 1rem;
     background-color: var(--product-background-color);
     display: flex;
@@ -72,6 +90,7 @@ body{
     width: 300px;
     overflow: hidden;  
     max-width: 300px;
+    color: black;
 }
 
 .products.loading{
@@ -80,6 +99,35 @@ body{
     justify-content: space-around;
     background-color: var(--products-loading-bg-color);
 }
+
+.product-detail{
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: var(--product-background-color);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 9px;
+    max-height: 70vh;
+    width: 50vw;
+    overflow: hidden;  
+    text-align: center;
+    color: black;
+}
+
+.product-detail .description{   
+    max-width: 20rem;
+    margin-bottom: 2rem;
+    word-wrap: break-word;
+    text-wrap: wrap;
+}
+
+.product-detail img{
+    width: 25vw;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
 
 .filter{
     text-align: center;
@@ -108,6 +156,7 @@ body{
     width:  20rem;
     background-color: var(--product-background-color);
     }
+    
 .auth form{
     display: flex;
     align-items: center;
@@ -118,9 +167,6 @@ body{
     margin-bottom: 1rem;
 }
 
-
-
-
  h1,h2,h3,h4,h5{
     margin: 10px 0;;
 }
@@ -128,6 +174,24 @@ body{
     max-height: 200px;
     border-radius: 5%;
       
+}
+
+.form-edit{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-align: center;    
+    width:  20rem;
+    background-color: var(--product-background-color);
+}
+
+.form-edit form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+.form-edit input {
+    margin-bottom: 1rem;
 }
 
 .product span {

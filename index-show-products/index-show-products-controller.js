@@ -14,10 +14,11 @@ function drawProducts(products, productContainer){
         //si los hay llama en un bucle a buildProduct pasandole un objeto producto
         products.forEach(product => {
             const newProduct = buildProduct(product)
-            productContainer.classList.toggle("loading") 
+            
             productContainer.appendChild(newProduct) 
                         
         })
+        productContainer.classList.toggle("loading") 
     }
 }
 

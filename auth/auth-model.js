@@ -54,16 +54,12 @@ export  const  getCurrentUserInfo = async ()=>{
         }
       })
       
-      //validamos la respuesta de la api y si no es valida lanzamos un error
-      if(!response.ok){
-        throw new Error("El usuario no existe")
-      }
-      
+           
       //los convertimos a json IMPORTANTE .json es una promesa necesitará await
       const user = await response.json()
       return user
         
       } catch (error) {
-        throw new Error(error.message)
+        throw new Error(error)
       }
     }

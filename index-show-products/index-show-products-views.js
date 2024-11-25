@@ -4,22 +4,24 @@ export const buildProduct= (product)=>{
     const newProduct = document.createElement('div')
     if (product.image != ""){
         newProduct.innerHTML=`
-        <div class="product">
+        
+        <a class="product" href="product-detail.html?id=${product.id}">
         <img src=${product.image} alt=${product.name}>
         <h3>${product.name}</h3>
         <span>${product.description}</span>
         <span>${product.typeProduct}</span>
         <h4>${product.price} €</h4>
-        </div> `
+         </a> `
     }else{
+        
         newProduct.innerHTML=`
-        <div class="product">
+        <a class="product" href="product-detail.html?id=${product.id}">
         <img src="assets/product-photos/no_image.jpg" alt=${product.name}>        
         <h3>${product.name}</h3>
         <span>${product.description}</span>
         <span>${product.typeProduct}</span>
         <h4>${product.price} €</h4>
-        </div> `
+        </a> `
     }   
     return newProduct
 }
