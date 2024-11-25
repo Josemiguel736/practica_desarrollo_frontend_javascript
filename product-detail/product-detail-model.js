@@ -54,8 +54,8 @@ export async function deleteProduct(productId, token) {
 }
 
 export async function updateProduct(productId,name,description,image,typeProduct,price, token){
-
-    fetch(`http://localhost:8000/api/products/${productId}`,{
+try {
+    const response = await fetch(`http://localhost:8000/api/products/${productId}`,{
         method:"PUT",
         //mando los parametros por el body TIENEN QUE SER STRING por eso el metodo stringfy
         body:JSON.stringify({
@@ -72,4 +72,20 @@ export async function updateProduct(productId,name,description,image,typeProduct
             "Authorization": `Bearer ${token} `
         }
     });
-}
+    if (response.ok) {
+        alert(`El producto se ha actualizado correctamente.`);
+    } else {
+        
+        if (response.status===401){
+            throw new Error((`No tienes permiso para modificar este producto`))
+        }else if (response.status===404){
+            throw new Error(`No hemos podido modificar tu producto, por favor intentelo más tarde`)
+        }            
+    }
+
+    
+} catch (error) {
+    throw new Error(error.message)
+    
+}}
+    

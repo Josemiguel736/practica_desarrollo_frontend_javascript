@@ -16,6 +16,12 @@ export function sessionController(sessionContainer){
             localStorage.removeItem("jwt")
             //vuelvo a llamar al controlador para solo recargar la parte afectada por este nodo
             sessionController(sessionContainer)
+            const path=window.location.pathname
+            
+            if(path!=="/"){
+                const locationUser=window.location.href
+                window.location.href=locationUser
+            }
         })
     }else{
         //mostrar enlaces al login y singup
