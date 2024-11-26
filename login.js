@@ -32,28 +32,28 @@ document.addEventListener("DOMContentLoaded", () => {
     sessionController(sessionContainer)
 
     loginContainer.addEventListener("loading-spinner", (event) => {
-        // Alterna el spinner dentro del productContainer
+        // Alterna el spinner dentro del loginContainer
         loadingSpinner(loginContainer);
     });
 
     //escucho los eventos "notification" del productContainer        
     loginContainer.addEventListener("notification",async (event)=>{
 
-    //si tengo una notificacion llamo a showNotification para mostrarla pasandole los  datos que me interesan
+    //si tengo una notificacion llamo a showBigNotificatio para mostrarla pasandole los  datos que me interesan
     showBigNotification(event.detail.message,event.detail.format,event.detail.type)
     })
 
-    //escucho los eventos "notification" del productContainer        
+    //escucho los eventos "emailNotification" del loginContainer        
     loginContainer.addEventListener("emailNotification",async (event)=>{
 
-        //si tengo una notificacion llamo a showNotification para mostrarla pasandole los  datos que me interesan
+        //si tengo una notificacion llamo a showEmailNotification para mostrarla pasandole los  datos que me interesan
         showEmailNotification(event.detail.message,event.detail.format,event.detail.type)
             })
 
-     //escucho los eventos "notification" del productContainer        
+     //escucho los eventos "notification" del loginContainer        
      loginContainer.addEventListener("passNotification",async (event)=>{
 
-        //si tengo una notificacion llamo a showNotification para mostrarla pasandole los  datos que me interesan
+        //si tengo una notificacion llamo a showPassotification para mostrarla pasandole los  datos que me interesan
         showPassotification(event.detail.message,event.detail.format,event.detail.type)
             })
 

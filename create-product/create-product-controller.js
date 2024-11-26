@@ -16,16 +16,19 @@ export function createProductController(createProduct){
         const typeProductElement = createProduct.querySelector("#typeProduct")
         const typeProduct = typeProductElement.value
 
+        const tagsProductElement = createProduct.querySelector("#tags")
+        const tagsProduct = typeProductElement.value
+
         const priceElement = createProduct.querySelector("#price")
-        const price = priceElement.value
+        const price = Number(priceElement.value)
 
         handleProductCreation(name,description,image,typeProduct,price)
     })
 }
 
-function handleProductCreation(name,description,image,typeProduct,price){
+function handleProductCreation(name,description,image,typeProduct,tags,price){
     const token = localStorage.getItem("jwt")
-    createProduct(name,description,image,typeProduct,price,token)
+    createProduct(name,description,image,typeProduct,tags,price,token)
     window.location.href="/"
 
 }
