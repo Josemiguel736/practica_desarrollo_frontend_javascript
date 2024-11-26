@@ -69,6 +69,7 @@ const handleCreateUser = async (userEmail,password,registerContainer)=>{
 
 
 export function loginController(loginContainer){
+    
     loginContainer.addEventListener("submit",(event)=>{
         event.preventDefault()
         const userEmailElement = loginContainer.querySelector("#mail")

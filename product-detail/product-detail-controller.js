@@ -64,8 +64,8 @@ async function handleDrawOptionButtons(product, productDetailContainer) {
             //busco el boton de borrado
             const deleteButton = productContainer.querySelector(".delete")
 
-             //busco el boton de editar
-             const editButton = productContainer.querySelector(".edit")
+            //busco el boton de editar
+            const editButton = productContainer.querySelector(".edit")
 
             //escucho el evento submit en el boton de borrado
 
@@ -75,13 +75,13 @@ async function handleDrawOptionButtons(product, productDetailContainer) {
                 event.preventDefault()
                 await handlerProductDelete(product, productDetailContainer)
             })
-            
+
             editButton.addEventListener("submit", async (event) => {
 
                 //evito la propagacion del evento
                 event.preventDefault()
-                    await handlerEditProduct(product,productContainer,productDetailContainer)   
-                    })
+                await handlerEditProduct(product, productContainer, productDetailContainer)
+            })
         }
     } catch (error) {
         fireEvent("notification", productDetailContainer, `${error.message} `, "big", "error")
@@ -100,7 +100,7 @@ async function handlerProductDelete(product, productDetailContainer) {
         }
 
     } catch (error) {
-        if (error.message === "Error: Failed to fetch") {
+        if (error.message === "Failed to fetch") {
             fireEvent("notification", productDetailContainer, `No ha sido posible eliminar el producto, por favor intentelo más tarde`, "big", "error")
         } else {
             fireEvent("notification", productDetailContainer, `${error.message}`, "big", "error")
@@ -112,56 +112,55 @@ async function handlerProductDelete(product, productDetailContainer) {
     }
 }
 
-async function handlerEditProduct(product, productContainer, productDetailContainer){
-    try{
-        
-    productContainer.innerHTML = buildEditProductForm(product)
-    const select = productContainer.querySelector("#typeProduct");
-    if (select) {
-        // Establece el valor basado en product.typeProduct
-        select.value = product.typeProduct; // Suponiendo que "typeProduct" es el campo correspondiente
-    }
-    
-    const editProductContainer = productContainer.querySelector(".edit-button")
-    editProductContainer.addEventListener("click", async (event) => {
-        //evito la propagacion del evento
-        event.preventDefault()
-        const nameElement = productContainer.querySelector("#name")
-        const name = nameElement.value
-        
+async function handlerEditProduct(product, productContainer, productDetailContainer) {
+    try {
 
-        const descriptionElement = productContainer.querySelector("#description")
-        const description = descriptionElement.value
-
-        const imageElement = productContainer.querySelector("#image")
-        const image = imageElement.value
-
-        const typeProductElement = productContainer.querySelector("#typeProduct")
-        const typeProduct = typeProductElement.value
-
-        const priceElement = productContainer.querySelector("#price")
-        const price = priceElement.value
-        try {
-            await callUpdateProduct(product,name,description,image,typeProduct,price)            
-        } catch (error) {
-            if (error.message === "Error: TypeError: Failed to fetch") {
-                fireEvent("notification", productDetailContainer, `Ahora mismo no se puede actualizar el producto, por favor intentelo más tarde`, "big", "error")
-            } else {
-                fireEvent("notification", productDetailContainer, `${error.message}`, "big", "error")
-            }
-            
+        productContainer.innerHTML = buildEditProductForm(product)
+        const select = productContainer.querySelector("#typeProduct");
+        if (select) {
+            // Establece el valor basado en product.typeProduct
+            select.value = product.typeProduct; // Suponiendo que "typeProduct" es el campo correspondiente
         }
-        
-    })
-}catch(error){
-    throw new Error(error.message)
-}}
 
-async function callUpdateProduct(product,name,description,image,typeProduct,price) {
+        const editProductContainer = productContainer.querySelector(".edit-button")
+        editProductContainer.addEventListener("click", async (event) => {
+            //evito la propagacion del evento
+            event.preventDefault()
+            const nameElement = productContainer.querySelector("#name")
+            const name = nameElement.value
+
+
+            const descriptionElement = productContainer.querySelector("#description")
+            const description = descriptionElement.value
+
+            const imageElement = productContainer.querySelector("#image")
+            const image = imageElement.value
+
+            const typeProductElement = productContainer.querySelector("#typeProduct")
+            const typeProduct = typeProductElement.value
+
+            const priceElement = productContainer.querySelector("#price")
+            const price = priceElement.value
+            try {
+                await callUpdateProduct(product, name, description, image, typeProduct, price)
+            } catch (error) {
+                if (error.message === "Failed to fetch") {
+                    fireEvent("notification", productDetailContainer, `Ahora mismo no se puede actualizar el producto, por favor intentelo más tarde`, "big", "error")
+                } else {
+                    fireEvent("notification", productDetailContainer, `${error.message}`, "big", "error")
+                }
+            }
+        })
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
+
+async function callUpdateProduct(product, name, description, image, typeProduct, price) {
     try {
         const token = localStorage.getItem("jwt")
-        await updateProduct(product.id,name,description,image,typeProduct,price,token)
-        window.location.href = `/product-detail.html?id=${product.id}` 
+        await updateProduct(product.id, name, description, image, typeProduct, price, token)
+        window.location.href = `/product-detail.html?id=${product.id}`
     } catch (error) {
         throw new Error(error.message)
     }

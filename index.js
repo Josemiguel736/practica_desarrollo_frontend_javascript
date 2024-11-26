@@ -33,10 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
         sessionController(sessionContainer)
 
         //escucho los eventos "notification" del productContainer        
-        productContainer.addEventListener("notification",(event)=>{
+        productContainer.addEventListener("notification",async (event)=>{
 
             //si tengo una notificacion llamo a showNotification para mostrarla pasandole los  datos que me interesan
-            showNotification(event.detail.message,event.detail.format,event.detail.type)
+           await showNotification(event.detail.message,event.detail.format,event.detail.type)
         })
 
   

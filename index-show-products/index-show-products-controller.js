@@ -35,7 +35,7 @@ export async function showProducts(productContainer){
 
         //le enviamos el productContainer y una lista de objetos producto
         drawProducts(products,productContainer) 
-
+        
         //Lanzamos una notificación indicando que los productos se cargaron correctamente
         fireEvent("notification",productContainer,"Productos cargados correctamente","big","success")
 
