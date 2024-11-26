@@ -2,6 +2,7 @@
 import { buildNoProducts,  buildProduct } from "./index-show-products-views.js"
 import { getProducts } from "./index-show-products-model.js"
 import { fireEvent } from "../utils/fireEvent.js"
+import { openAndFireNotification } from "../utils/utils.js"
 
 function drawProducts(products, productContainer){
     //comprueba si hay productos para mostrar 
@@ -35,7 +36,7 @@ export async function showProducts(productContainer){
 
         //le enviamos el productContainer y una lista de objetos producto
         drawProducts(products,productContainer) 
-        
+        openAndFireNotification(productContainer)
         //Lanzamos una notificación indicando que los productos se cargaron correctamente
         fireEvent("notification",productContainer,"Productos cargados correctamente","big","success")
 

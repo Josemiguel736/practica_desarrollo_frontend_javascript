@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         productContainer.addEventListener("notification",async (event)=>{
 
             //si tengo una notificacion llamo a showNotification para mostrarla pasandole los  datos que me interesan
-           await showNotification(event.detail.message,event.detail.format,event.detail.type)
+           showNotification(event.detail.message,event.detail.format,event.detail.type)
         })
 
   
