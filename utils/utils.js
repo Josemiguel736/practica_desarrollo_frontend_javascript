@@ -29,7 +29,7 @@ export function joinProductsWidthTags(products,tags){
         // Transformo cada producto
         return {
           ...product, // Copio todas las propiedades originales del producto
-          tags: product.tagsId.map(tagId => {
+          tags: product.tagsList.map(tagId => {
             //limpio el tagId
             const cleanTag= Number(tagId.split("%").join(""))
             // Busco cada tagId 

@@ -8,7 +8,7 @@ export async function getProducts(formName, formMin, formMax, tagSearch) {
         if (formName) url += `name=${formName}&`
         if (formMax) url += `price_lte=${formMax}&`
         if (formMin) url += `price_gte=${formMin}&`
-        if (tagSearch) url += `tagsId_like=%${tagSearch}%&`
+        if (tagSearch) url += `tagsList_like=%${tagSearch}%&`
 
         // Eliminar el último "&" si existe
         url = url.endsWith('&') ? url.slice(0, -1) : url

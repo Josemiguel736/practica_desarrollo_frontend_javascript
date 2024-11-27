@@ -2,7 +2,7 @@
 
 export async function createProduct(name, description, image, typeProduct, price,tags, token) {
     
-    const tagsId = await createTagIdList(tags,token)
+    const tagsList = await createTagIdList(tags,token)
     
     
     // Luego, hacemos el POST para crear el producto
@@ -14,7 +14,7 @@ export async function createProduct(name, description, image, typeProduct, price
             image,
             typeProduct,
             price,
-            tagsId
+            tagsList
              // Usamos los ids de los tags creados
         }),
         headers: {

@@ -28,7 +28,7 @@ export async function deleteProduct(productId, token) {
     try {
         
         //Envío a products el productId del producto que quiero borrar
-        const response = await fetch(`http://localhost:8000/api/products?id=2`, {
+        const response = await fetch(`http://localhost:8000/api/products/${productId}`, {
 
             method: "DELETE",
             //envio la cabecera con el token del usuario que quiere borrar el producto (Deberá de ser el dueño o la API lanzara un error)
@@ -60,7 +60,7 @@ export async function deleteProduct(productId, token) {
 export async function updateProduct(productId,name,description,image,typeProduct,tagsString,price,token){
 try {
     
-    const tagsId= await updateTagHandler(tagsString,token)
+    const tagsList= await updateTagHandler(tagsString,token)
     const response = await fetch(`http://localhost:8000/api/products/${productId}`,{
         method:"PUT",
         //mando los parametros por el body TIENEN QUE SER STRING por eso el metodo stringfy
@@ -70,7 +70,7 @@ try {
             image,
             typeProduct,
             price,
-            tagsId
+            tagsList
         }),
         //envio la cabecera, en este caso es una request header
         headers:{
