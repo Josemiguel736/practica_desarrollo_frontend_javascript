@@ -3,6 +3,8 @@
 export async function createProduct(name, description, image, typeProduct, price,tags, token) {
     
     const tagsId = await createTagIdList(tags,token)
+    
+    
     // Luego, hacemos el POST para crear el producto
     const response = await fetch("http://localhost:8000/api/products", {
         method: "POST",
@@ -12,7 +14,8 @@ export async function createProduct(name, description, image, typeProduct, price
             image,
             typeProduct,
             price,
-            tagsId // Usamos los ids de los tags creados
+            tagsId
+             // Usamos los ids de los tags creados
         }),
         headers: {
             "Content-type": "application/json",
@@ -50,10 +53,10 @@ async function addTag(tag, token) {
 
 async function getTagList() {
 
-    const response = await fetch("http://localhost:8000/api/tags")
+    const response = await fetch("http://localhost:8000/api/tags?_limit=150")
 
     if (!response.ok) {
-        throw new Error('Error al buscar el tag')
+        throw new Error('Error al buscar los tag')
     }
     // Obtengo los datos de la respuesta
     const data = await response.json() 
@@ -70,14 +73,15 @@ async function createTagIdList(tags,token) {
     // Primero, agregamos los tags y almacenamos sus ids
     for (const tag of tags) {
         // Busca si el tag ya existe en la lista
+        
         const existingTag = tagList.find(t => t.tag === tag)
         
         if (existingTag) {
-            tagsId.push(existingTag.id) // Si existe, agrega su id
+            tagsId.push(`%${existingTag.id}%`) // Si existe, agrega su id
         } else {
             // Si no existe, crea el tag
             const response = await addTag(tag, token) 
-            tagsId.push(response.id) // Agrega el id del nuevo tag
+            tagsId.push(`%${response.id}%`) // Agrega el id del nuevo tag
         }
     }
     return tagsId

@@ -43,7 +43,7 @@ export const buildNoProduct= ()=>{
     return newProduct
 }
 
-export const buildEditProductForm = (product)=>{
+export const buildEditProductForm = (product,productTags)=>{
     console.log(product)
     return `
     <section>
@@ -64,6 +64,9 @@ export const buildEditProductForm = (product)=>{
             <option selected>Comprar</option>
             <option>Vender</option>
         </select>
+
+        <label for="tags">Tags</label>
+        <input type="text" name="tags" value="${productTags}" id="tags" required>
         
         <label for="price" >precio</label>
         <input type="number" min="0" name="price" value="${product.price}" id="price" required>

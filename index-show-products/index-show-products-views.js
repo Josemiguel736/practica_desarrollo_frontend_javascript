@@ -31,3 +31,41 @@ export const buildNoProducts= ()=>{
     return newProduct
 }
 
+export const buildFilter=(tagList)=>{
+
+    const form = document.createElement('form')
+    form.setAttribute("class","filter")
+    form.innerHTML = `
+    <label class="input label" for="name">Buscar:</label>
+    <input class="input" type="text" id="name" name="name" value="">
+    <label class="input label" for="min">Minimo</label>
+    <input class="input" type="number" id="min" name="min" value="">
+    <label class="input label" for="max">Máximo</label>
+    <input class="input" type="number" id="max" name="max" value="">
+    <label class="input label" for="tag">Tags:</label>
+    
+    `
+    const select = document.createElement("select")
+    select.setAttribute("class","input")
+    select.setAttribute("id","tag")
+    select.setAttribute("name","tag")
+
+    tagList.forEach((tagElement,index) => {
+        const tagSelect = document.createElement('option')
+        if(index===0){
+            tagSelect.setAttribute("selected","true")
+       }
+        tagSelect.innerHTML=`${tagElement}`
+        select.appendChild(tagSelect)        
+    });
+
+
+    form.appendChild(select) 
+    const button = document.createElement("button")
+    button.setAttribute("type","submit")
+    button.innerHTML=`Filtrar`
+    button.setAttribute("class","button")
+    form.appendChild(button) 
+
+    return form
+}

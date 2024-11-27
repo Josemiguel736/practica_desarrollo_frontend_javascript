@@ -11,7 +11,7 @@ export async function productDetailController(productDetailContainer, productId,
 
         const productTags = productQueryTags.split("%2C")
         productDetailContainer.appendChild(buildDetailProduct(product,productTags))
-        await handleDrawOptionButtons(product, productDetailContainer)
+        await handleDrawOptionButtons(product, productTags,productDetailContainer)
 
 
     } catch (error) {
@@ -49,7 +49,7 @@ async function callDeleteProduct(productId) {
     }
 }
 
-async function handleDrawOptionButtons(product, productDetailContainer) {
+async function handleDrawOptionButtons(product,productTags, productDetailContainer) {
     try {
         //busco quien es el dueño del producto
         const me = await ownerOfProduct()
@@ -82,7 +82,7 @@ async function handleDrawOptionButtons(product, productDetailContainer) {
 
                 //evito la propagacion del evento
                 event.preventDefault()
-                await handlerEditProduct(product, productContainer, productDetailContainer)
+                await handlerEditProduct(product,productTags ,productContainer, productDetailContainer)
             })
         }
     } catch (error) {
@@ -114,10 +114,12 @@ async function handlerProductDelete(product, productDetailContainer) {
     }
 }
 
-async function handlerEditProduct(product, productContainer, productDetailContainer) {
+async function handlerEditProduct(product,productTags ,productContainer, productDetailContainer) {
     try {
+        
 
-        productContainer.innerHTML = buildEditProductForm(product)
+        productContainer.innerHTML = buildEditProductForm(product,productTags)
+
         const select = productContainer.querySelector("#typeProduct");
         if (select) {
             // Establece el valor basado en product.typeProduct
@@ -141,10 +143,15 @@ async function handlerEditProduct(product, productContainer, productDetailContai
             const typeProductElement = productContainer.querySelector("#typeProduct")
             const typeProduct = typeProductElement.value
 
+            const tagsProductElement = productContainer.querySelector("#tags")
+            const tagsProduct = tagsProductElement.value
+
+            
+
             const priceElement = productContainer.querySelector("#price")
             const price = priceElement.value
             try {
-                await callUpdateProduct(product, name, description, image, typeProduct, price)
+                await callUpdateProduct(product, name, description, image, typeProduct,tagsProduct ,price)
             } catch (error) {
                 if (error.message === "Failed to fetch") {
                     fireEvent("notification", productDetailContainer, `Ahora mismo no se puede actualizar el producto, por favor intentelo más tarde`, "big", "error")
@@ -158,12 +165,16 @@ async function handlerEditProduct(product, productContainer, productDetailContai
     }
 }
 
-async function callUpdateProduct(product, name, description, image, typeProduct, price) {
+async function callUpdateProduct(product, name, description, image, typeProduct,tagsProduct ,price) {
     try {
         const token = localStorage.getItem("jwt")
-        await updateProduct(product.id, name, description, image, typeProduct, price, token)
-        window.location.href = `/product-detail.html?id=${product.id}`
+        console.log(token)
+        await updateProduct(product.id, name, description, image, typeProduct,tagsProduct, price, token)
+        window.location.href = `/`
     } catch (error) {
         throw new Error(error.message)
     }
 }
+
+
+

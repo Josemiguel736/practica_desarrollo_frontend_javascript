@@ -30,8 +30,10 @@ export function joinProductsWidthTags(products,tags){
         return {
           ...product, // Copio todas las propiedades originales del producto
           tags: product.tagsId.map(tagId => {
+            //limpio el tagId
+            const cleanTag= Number(tagId.split("%").join(""))
             // Busco cada tagId 
-            const tag =tags.find(tag=>tag.id ===tagId)
+            const tag =tags.find(tag=>tag.id ===cleanTag)
             //retorno el tag correcto
             return tag.tag
           })
@@ -39,4 +41,21 @@ export function joinProductsWidthTags(products,tags){
       })
       return productsWidthTags
 
+}
+
+
+export async function getFilterTag(tagToLocate) {
+  
+
+  const response = await fetch(`http://localhost:8000/api/tags?tag=${tagToLocate}`)
+  
+  if (!response.ok) {
+      throw new Error('Error al buscar el tag')
+  }
+  // Obtengo los datos de la respuesta
+  const tagFind = await response.json() 
+
+  return tagFind; 
+   
+  
 }

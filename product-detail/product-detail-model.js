@@ -1,4 +1,6 @@
 
+
+import { getFilterTag } from "../utils/utils.js"
 export async function getProduct(productId) {
 
     try {
@@ -53,8 +55,10 @@ export async function deleteProduct(productId, token) {
 
 }
 
-export async function updateProduct(productId,name,description,image,typeProduct,price, token){
+export async function updateProduct(productId,name,description,image,typeProduct,tagsString,price,token){
 try {
+    
+    const tagsId= await updateTagHandler(tagsString,token)
     const response = await fetch(`http://localhost:8000/api/products/${productId}`,{
         method:"PUT",
         //mando los parametros por el body TIENEN QUE SER STRING por eso el metodo stringfy
@@ -63,7 +67,8 @@ try {
             description,
             image,
             typeProduct,
-            price
+            price,
+            tagsId
         }),
         //envio la cabecera, en este caso es una request header
         headers:{
@@ -88,4 +93,54 @@ try {
     throw new Error(error.message)
     
 }}
+
+
+
+
+async function updateTagHandler(tagsString,token) {
+
+    const tagsId = []
     
+    const tags=tagsString.split(",")
+
+    // Primero, agregamos los tags y almacenamos sus ids
+    for (const tag of tags) {
+        // Busca si el tag ya existe en la lista
+        const tagFetch =await getFilterTag(tag.trim())
+        
+        const existingTag = tagFetch.find(t => t.tag === tag.trim())
+        
+        if (existingTag) {
+            tagsId.push(`%${existingTag.id}%`) // Si existe, agrega su id
+        } else {
+            // Si no existe, crea el tag
+            const response = await addTag(tag, token) 
+            tagsId.push(`%${response.id}%`) // Agrega el id del nuevo tag
+        }
+    }
+    return tagsId
+
+    
+
+
+}
+
+
+    
+async function addTag(tag, token) {
+    const response = await fetch("http://localhost:8000/api/tags", {
+        method: "POST",
+        body: JSON.stringify({ tag }),
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('Error al crear el tag')
+    }
+
+    const data = await response.json() 
+    return data 
+}

@@ -1,6 +1,6 @@
 import { joinProductsWidthTags } from "../utils/utils.js";
 
-export async function getProducts(formName,formMin,formMax) {
+export async function getProducts(formName,formMin,formMax,tagSearch) {
     try {
         //conexion con la api para obtener productos
         let url = 'http://localhost:8000/api/products?';
@@ -8,13 +8,14 @@ export async function getProducts(formName,formMin,formMax) {
         if (formName) url += `name=${formName}&`
         if (formMax) url += `price_lte=${formMax}&`
         if (formMin) url += `price_gte=${formMin}&`
+        if (tagSearch) url += `tagsId_like=%${tagSearch}%&`
 
         // Eliminar el último "&" si existe
         url = url.endsWith('&') ? url.slice(0, -1) : url
         
         const [productsResponse,tagsResponse] = await Promise.all([
             fetch(url), 
-            fetch('http://localhost:8000/api/tags')
+            fetch('http://localhost:8000/api/tags?_limit=150')
         ])
         
         if(!productsResponse.ok || !tagsResponse.ok){
@@ -33,4 +34,32 @@ export async function getProducts(formName,formMin,formMax) {
     }    
 }
 
+
+export async function getTagsList() {
+
+    const response = await fetch("http://localhost:8000/api/tags?_limit=150")
+
+    if (!response.ok) {
+        throw new Error('Error al buscar el tag')
+    }
+    // Obtengo los datos de la respuesta
+    const data = await response.json() 
+
+    return data; 
+    
+}
+
+export async function getTag(tag) {
+
+    const response = await fetch(`http://localhost:8000/api/tags?tag=${tag}`)
+
+    if (!response.ok) {
+        throw new Error('Error al buscar el tag')
+    }
+    // Obtengo los datos de la respuesta
+    const data = await response.json() 
+
+    return data; 
+    
+}
 
