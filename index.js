@@ -14,6 +14,13 @@ document.addEventListener("DOMContentLoaded", () => { //Esperamos a que el DOM e
         sessionController(sessionContainer)
 
          const productContainer = document.querySelector(".products"); //Definimos el productContainer será donde mostraremos los productos
+
+           // Escuchamos el evento "loading-spinner"
+           productContainer.addEventListener("loading-spinner", (event) => {
+            // Alterna el spinner dentro del productContainer
+            loadingSpinner(productContainer);
+            });
+
          showProducts(productContainer);// Llama a showProducts para mostrar los productos
 
         const filterContainer = document.querySelector(".filter-content")
@@ -25,11 +32,7 @@ document.addEventListener("DOMContentLoaded", () => { //Esperamos a que el DOM e
            showNotification(event.detail.message,event.detail.format,event.detail.type)
         })
 
-        // Escuchamos el evento "loading-spinner"
-        productContainer.addEventListener("loading-spinner", (event) => {
-        // Alterna el spinner dentro del productContainer
-        loadingSpinner(productContainer);
-        });
+     
 
         filterContainer.addEventListener("submit",async (event)=>{
             event.preventDefault();

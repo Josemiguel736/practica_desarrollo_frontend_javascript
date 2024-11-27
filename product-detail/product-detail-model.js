@@ -24,7 +24,9 @@ export async function getProduct(productId) {
 }
 
 export async function deleteProduct(productId, token) {
+    
     try {
+        
         //Envío a products el productId del producto que quiero borrar
         const response = await fetch(`http://localhost:8000/api/products/${productId}`, {
 
@@ -77,10 +79,7 @@ try {
             "Authorization": `Bearer ${token} `
         }
     });
-    if (response.ok) {
-        alert(`El producto se ha actualizado correctamente.`);
-    } else {
-        
+    if (!response.ok) {
         if (response.status===401){
             throw new Error((`No tienes permiso para modificar este producto`))
         }else if (response.status===404){

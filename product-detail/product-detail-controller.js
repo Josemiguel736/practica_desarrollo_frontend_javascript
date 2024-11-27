@@ -2,6 +2,7 @@ import { getCurrentUserInfo } from "../auth/auth-model.js";
 import { getProduct, deleteProduct, updateProduct } from "./product-detail-model.js";
 import { buildDetailProduct, buildEditProductForm, buildNoProduct, deleteAndEditButton } from "./product-detail-views.js";
 import { fireEvent } from "../utils/fireEvent.js";
+import { writeNotification } from "../utils/utils.js";
 
 export async function productDetailController(productDetailContainer, productId,productQueryTags) {
     try {
@@ -151,7 +152,9 @@ async function handlerEditProduct(product,productTags ,productContainer, product
             const priceElement = productContainer.querySelector("#price")
             const price = priceElement.value
             try {
+                fireEvent("loading-spinner", productDetailContainer)
                 await callUpdateProduct(product, name, description, image, typeProduct,tagsProduct ,price)
+                writeNotification("notification","Producto actualizado correctamente","big","success")
             } catch (error) {
                 if (error.message === "Failed to fetch") {
                     fireEvent("notification", productDetailContainer, `Ahora mismo no se puede actualizar el producto, por favor intentelo más tarde`, "big", "error")
@@ -167,8 +170,7 @@ async function handlerEditProduct(product,productTags ,productContainer, product
 
 async function callUpdateProduct(product, name, description, image, typeProduct,tagsProduct ,price) {
     try {
-        const token = localStorage.getItem("jwt")
-        console.log(token)
+        const token = localStorage.getItem("jwt")        
         await updateProduct(product.id, name, description, image, typeProduct,tagsProduct, price, token)
         window.location.href = `/`
     } catch (error) {

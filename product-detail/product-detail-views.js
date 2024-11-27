@@ -43,13 +43,12 @@ export const buildNoProduct= ()=>{
     return newProduct
 }
 
-export const buildEditProductForm = (product,productTags)=>{
-    console.log(product)
+export const buildEditProductForm = (product,productTags)=>{    
     return `
     <section>
         <div class="form-edit">
         <form>
-            <h3>Crear nuevo producto</h3>
+            <h3>Actualizar producto</h3>
         <label for="name">Nombre del producto</label>
         <input type="text" name="name" value="${product.name}" id="name" required>
         
@@ -71,7 +70,7 @@ export const buildEditProductForm = (product,productTags)=>{
         <label for="price" >precio</label>
         <input type="number" min="0" name="price" value="${product.price}" id="price" required>
         
-        <button class="edit-button" type="submit">Crear producto</button>
+        <button class="edit-button" type="submit">Actualizar producto</button>
     </form>
 </div>
     
