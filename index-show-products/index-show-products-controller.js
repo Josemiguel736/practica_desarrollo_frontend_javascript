@@ -7,6 +7,7 @@ import { openAndFireNotification } from "../utils/utils.js"
 function drawProducts(products, productContainer){
     //comprueba si hay productos para mostrar 
     //si no hay productos llama a buildNoProducts para pintar que no hay productos
+    
     if(products.length===0){
         const noProduct = buildNoProducts()
         productContainer.appendChild(noProduct)

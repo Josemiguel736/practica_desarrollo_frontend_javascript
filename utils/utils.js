@@ -23,3 +23,20 @@ export const openAndFireNotification = (element)=>{
     localStorage.removeItem("notification");
 }
 }
+
+export function joinProductsWidthTags(products,tags){
+    const productsWidthTags = products.map(product => {
+        // Transformo cada producto
+        return {
+          ...product, // Copio todas las propiedades originales del producto
+          tags: product.tagsId.map(tagId => {
+            // Busco cada tagId 
+            const tag =tags.find(tag=>tag.id ===tagId)
+            //retorno el tag correcto
+            return tag.tag
+          })
+        }
+      })
+      return productsWidthTags
+
+}
