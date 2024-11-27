@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchParams = new URLSearchParams(window.location.search)
     const productId = searchParams.get("id")
     const productQueryTags = searchParams.get("tags")
-    const productTags = productQueryTags.split("%2C")
+    
     
 
     //Definimos el productDetailContainer será donde mostraremos los productos
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Llama a showProducts para mostrar el producto
-        productDetailController(productDetailContainer,productId,productTags);
+        productDetailController(productDetailContainer,productId,productQueryTags);
 
         //creo el sessionContainer 
         const sessionContainer = document.querySelector(".navbar")
