@@ -46,7 +46,7 @@ async function callDeleteProduct(productId) {
         await deleteProduct(productId, token)
         window.location.href = "/"
     } catch (error) {
-        throw new Error(error.message)
+        throw new Error(error)
     }
 }
 
@@ -95,6 +95,7 @@ async function handlerProductDelete(product, productDetailContainer) {
     //pido confirmación antes de borrar el producto
     const confirmDeleteProduct = confirm("Seguro que esea borrar el producto?")
     try {
+
         //si el usuario confirma
         if (confirmDeleteProduct) {
             //reproduzco la ruleda de carga y llamo al la función handleProductDelete
@@ -103,7 +104,7 @@ async function handlerProductDelete(product, productDetailContainer) {
         }
 
     } catch (error) {
-        if (error.message === "Failed to fetch") {
+        if (error.message === "Error: Failed to fetch") {
             fireEvent("notification", productDetailContainer, `No ha sido posible eliminar el producto, por favor intentelo más tarde`, "big", "error")
         } else {
             fireEvent("notification", productDetailContainer, `${error.message}`, "big", "error")
@@ -114,6 +115,8 @@ async function handlerProductDelete(product, productDetailContainer) {
         }
     }
 }
+
+
 
 async function handlerEditProduct(product,productTags ,productContainer, productDetailContainer) {
     try {

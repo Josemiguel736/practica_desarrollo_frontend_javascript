@@ -28,7 +28,7 @@ export async function deleteProduct(productId, token) {
     try {
         
         //Envío a products el productId del producto que quiero borrar
-        const response = await fetch(`http://localhost:8000/api/products/${productId}`, {
+        const response = await fetch(`http://localhost:8000/api/products?id=2`, {
 
             method: "DELETE",
             //envio la cabecera con el token del usuario que quiere borrar el producto (Deberá de ser el dueño o la API lanzara un error)

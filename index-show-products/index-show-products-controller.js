@@ -47,6 +47,7 @@ export async function showProducts(productContainer, products) {
 
     } catch (error) {
         //Si ha ocurrido un error lanzaremos una notificación al usuario
+        
         fireEvent("notification", productContainer, `${error}`, "big", "error")
     }
 }
