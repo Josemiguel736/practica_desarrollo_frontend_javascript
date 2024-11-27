@@ -3,12 +3,12 @@ import { getProduct, deleteProduct, updateProduct } from "./product-detail-model
 import { buildDetailProduct, buildEditProductForm, buildNoProduct, deleteAndEditButton } from "./product-detail-views.js";
 import { fireEvent } from "../utils/fireEvent.js";
 
-export async function productDetailController(productDetailContainer, productId) {
+export async function productDetailController(productDetailContainer, productId,productTags) {
     try {
         //Iniciamos la ruleta de carga
         fireEvent("loading-spinner", productDetailContainer)
         const product = await getProduct(productId)
-        productDetailContainer.appendChild(buildDetailProduct(product))
+        productDetailContainer.appendChild(buildDetailProduct(product,productTags))
         await handleDrawOptionButtons(product, productDetailContainer)
 
 

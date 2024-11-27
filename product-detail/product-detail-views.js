@@ -1,26 +1,21 @@
-export const buildDetailProduct= (product)=>{
+export const buildDetailProduct= (product,productTags)=>{
     //creo un nodo con mi html dentro
+    const tagString = productTags.join(", ")
     const newProduct = document.createElement('div')
     newProduct.setAttribute("class","product-detail")
-    if (product.image != ""){
+    if (product.image === ""){
+        product.image="assets/product-photos/no_image.jpg"
+    }
         newProduct.innerHTML=`        
         
         <img src=${product.image} alt=${product.name}>
         <h3>${product.name}</h3>
         <span class="description">${product.description}</span>
         <span>${product.typeProduct}</span>
+         <span>${tagString}</span>
         <h4>${product.price} €</h4>
          `
-    }else{
-        
-        newProduct.innerHTML=`
-        <img src="assets/product-photos/no_image.jpg" alt=${product.name}>        
-        <h3>${product.name}</h3>
-        <span class="description">${product.description}</span>
-        <span>${product.typeProduct}</span>
-        <h4>${product.price} €</h4>
-        `
-    }   
+    
     return newProduct
 }
 

@@ -2,6 +2,7 @@
 export const buildProduct= (product)=>{
     //convierto la lista de tags a un string
     const tagString = product.tags.join(", ")
+    const tagQuery = product.tags.join("%2C")
 
     //creo un nodo con mi html dentro
     const newProduct = document.createElement('div')
@@ -10,7 +11,7 @@ export const buildProduct= (product)=>{
     }
         newProduct.innerHTML=`
         
-        <a class="product" href="product-detail.html?id=${product.id}">
+        <a class="product" href="product-detail.html?id=${product.id}&tags=${tagQuery}">
         <img src=${product.image} alt=${product.name}>
         <h3>${product.name}</h3>
         <span>${product.description}</span>
