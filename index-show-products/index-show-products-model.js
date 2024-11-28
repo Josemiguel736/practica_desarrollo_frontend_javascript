@@ -1,17 +1,24 @@
 import { joinProductsWidthTags } from "../utils/utils.js";
 
-export async function getProducts(formName, formMin, formMax, tagSearch) {
+export async function getProducts(formName, formMin, formMax, tagSearch,limit,page) {
     try {
+        if(!page){
+            page=1
+        }
+        if(!limit){
+            limit=10
+        }
         //conexion con la api para obtener productos
-        let url = 'http://localhost:8000/api/products?';
+        let url = `http://localhost:8000/api/products?_page=${page}&_limit=${limit}&` ;
 
-        if (formName) url += `name=${formName}&`
+        if (formName) url += `name_like=${formName}&`
         if (formMax) url += `price_lte=${formMax}&`
         if (formMin) url += `price_gte=${formMin}&`
         if (tagSearch) url += `tagsList_like=%${tagSearch}%&`
 
         // Eliminar el último "&" si existe
-        url = url.endsWith('&') ? url.slice(0, -1) : url
+        if(url!=`http://localhost:8000/api/products?_page=${page}&_limit=${limit}&` ){
+        url = url.endsWith('&') ? url.slice(0, -1) : url}
 
         const [productsResponse, tagsResponse] = await Promise.all([
             fetch(url),
@@ -21,13 +28,16 @@ export async function getProducts(formName, formMin, formMax, tagSearch) {
         if (!productsResponse.ok || !tagsResponse.ok) {
             throw new Error("El recurso no existe o está inaccesible")
         }
+        const totalCount = Number( productsResponse.headers.get('X-Total-Count'))
+        const end = isFinalPage(totalCount,limit,page)       
+        
         const [products, tags] = await Promise.all([
             productsResponse.json(),
             tagsResponse.json()
         ])
-
-
-        return joinProductsWidthTags(products, tags)
+        
+        const productsGet=joinProductsWidthTags(products, tags)
+        return {productsGet,end}
 
     } catch (error) {
         throw new Error("El servidor no responde, por favor vuelva a intentarlo más tarde")
@@ -63,3 +73,14 @@ export async function getTag(tag) {
 
 }
 
+function isFinalPage(totalCount,limit,page){
+    
+    const totalPages = totalCount/limit
+    console.log(totalPages)
+    if(page >= totalPages){
+        return true
+    }else{
+        return false
+    }
+
+}

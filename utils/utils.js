@@ -24,6 +24,22 @@ export const openAndFireNotification = (element)=>{
 }
 }
 
+
+export const sendObjet=(item)=>{
+  const objet = {item}
+  localStorage.setItem("objet", JSON.stringify(objet))
+}
+
+export const openObjet = ()=>{
+  const objet =  JSON.parse(localStorage.getItem("objet"));
+  if (objet) {     
+    return objet   
+}
+}
+
+
+
+
 export function joinProductsWidthTags(products,tags){
     const productsWidthTags = products.map(product => {
         // Transformo cada producto

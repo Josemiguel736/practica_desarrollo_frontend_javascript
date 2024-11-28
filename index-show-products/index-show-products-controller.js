@@ -1,16 +1,17 @@
 
-import { buildFilter, buildNoProducts, buildProduct } from "./index-show-products-views.js"
+import { buildFilter, buildNoProducts, buildProduct, drawPaginationButtons } from "./index-show-products-views.js"
 import { getProducts, getTag, getTagsList } from "./index-show-products-model.js"
 import { fireEvent } from "../utils/fireEvent.js"
 import { openAndFireNotification } from "../utils/utils.js"
 
 function drawProducts(products, productContainer) {
+    
     //comprueba si hay productos para mostrar 
     //si no hay productos llama a buildNoProducts para pintar que no hay productos
-
+    productContainer.classList.remove("loading")
     if (products.length === 0) {
         const noProduct = buildNoProducts()
-        productContainer.appendChild(noProduct)
+        productContainer.appendChild(noProduct)       
 
     } else {
         //si los hay llama en un bucle a buildProduct pasandole un objeto producto
@@ -19,8 +20,8 @@ function drawProducts(products, productContainer) {
             productContainer.appendChild(newProduct)
 
         })
-        productContainer.classList.toggle("loading")
     }
+    
 }
 
 export async function showProducts(productContainer, products) {
@@ -29,17 +30,27 @@ export async function showProducts(productContainer, products) {
 
     try {
         //Llamamos a la base de datos y si sale bien a drawProducts
-        let productsGet
+        let productsAndEnd 
         if (products) {
-            productsGet = products
+            productsAndEnd = products
         } else {
-            productsGet = await getProducts()
-        }
+            const searchParams = new URLSearchParams(window.location.search)
+            const page = parseInt(searchParams.get("page")) || 1
+            productsAndEnd= await getProducts(null,null,null,null,null,page)
+          }
+        const {productsGet,end} = productsAndEnd
+
+      
+
 
         //vaciamos products container
         productContainer.innerHTML = ""
 
+        
+        
+
         //le enviamos el productContainer y una lista de objetos producto
+        hiddenNextButton(end)
         drawProducts(productsGet, productContainer)
         openAndFireNotification(productContainer)
         //Lanzamos una notificación indicando que los productos se cargaron correctamente
@@ -55,43 +66,67 @@ export async function showProducts(productContainer, products) {
 export async function filterDrawController(filterContainer) {
 
     const tagsObjets = await getTagsList()
+    const searchParams = new URLSearchParams(window.location.search)
+    let page = searchParams.get("page")
+    
 
     const tagList = []
     tagsObjets.forEach((tag) => {
         tagList.push(tag.tag)
     })
-    const filter = buildFilter(tagList)
+    const filter = buildFilter(tagList,page)
+    
     filterContainer.appendChild(filter)
 }
 
-export async function filterProductsController(filterContainer) {
+export async function filterProductsController(filterContainer,page) {
     const nameElement = filterContainer.querySelector("#name");
     const minElement = filterContainer.querySelector("#min");
     const maxElement = filterContainer.querySelector("#max");
     const tagElement = filterContainer.querySelector("#tag");
+    const limitElement = filterContainer.querySelector("#limit");
 
     const formName = nameElement.value;
     const formMin = minElement.value;
     const formMax = maxElement.value;
     const formTag = tagElement.value;
+    const formLimit = Number(limitElement.value)
+
 
     let tagSearch = undefined
 
     if (formTag != "Todos") {
         tagSearch = await getTag(formTag)
         tagSearch = tagSearch[0].id
-        console.log(tagSearch)
-    }
+            }
 
 
 
     // Llamamos a getFilteredProducts pasando los parámetros que hemos recogido del formulario
     try {
-        const filterProducts = await getProducts(formName, formMin, formMax, tagSearch);
+        const filterProducts = await getProducts(formName, formMin, formMax, tagSearch,formLimit,page);
         return filterProducts
     } catch (error) {
         fireEvent("notification", filterContainer, `${error}`, "big", "error")
     }
 }
 
+export function paginationProductsController(paginationContainer){
 
+    paginationContainer.innerHTML=""
+
+    const searchParams = new URLSearchParams(window.location.search)
+        const page = parseInt(searchParams.get("page")) || 1;
+        paginationContainer.appendChild(drawPaginationButtons(page)) 
+}
+
+
+function hiddenNextButton(next){
+    
+    if(next){
+        const nextButton=document.querySelector(".next-page")
+        nextButton.setAttribute("class", "hidden")
+        console.log("algo")
+        console.log("aja")
+    }
+}
