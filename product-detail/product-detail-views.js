@@ -1,11 +1,11 @@
-export const buildDetailProduct= (product,productTags)=>{
-    //creo un nodo con mi html dentro
-    const tagString = productTags.join(", ")
-    const newProduct = document.createElement('div')
-    newProduct.setAttribute("class","product-detail")
-    console.log(product.image)
-    
-        newProduct.innerHTML=`        
+export const buildDetailProduct = (product, productTags) => {
+  //creo un nodo con mi html dentro
+  const tagString = productTags.join(", ");
+  const newProduct = document.createElement("div");
+  newProduct.setAttribute("class", "product-detail");
+  console.log(product.image);
+
+  newProduct.innerHTML = `        
         
         <img src=${product.image} alt=${product.name}>
         <h3>${product.name}</h3>
@@ -13,40 +13,38 @@ export const buildDetailProduct= (product,productTags)=>{
         <span>${product.typeProduct}</span>
          <span>${tagString}</span>
         <h4>${product.price} €</h4>
-         `
-    
-    return newProduct
-}
+         `;
 
-export const deleteAndEditButton= ()=>{
-    //creo un nodo con mi html dentro
-    const deleteAndEditButton = document.createElement('div')
-    deleteAndEditButton.setAttribute("class","container-detail")
-    deleteAndEditButton.innerHTML=` 
+  return newProduct;
+};
+
+export const deleteAndEditButton = () => {
+  //creo un nodo con mi html dentro
+  const deleteAndEditButton = document.createElement("div");
+  deleteAndEditButton.setAttribute("class", "container-detail");
+  deleteAndEditButton.innerHTML = ` 
     <form class="delete ">
     <button type="submit" id="delete-button"> Borrar Producto </button>
     </form><form class="edit">
     <button type="submit" id="edit-button"> Editar Producto </button>
     </form>
-    `
-    return deleteAndEditButton
+    `;
+  return deleteAndEditButton;
+};
 
-}
+export const buildNoProduct = () => {
+  //creo un nodo con mi html dentro
+  const newProduct = document.createElement("span");
+  newProduct.innerHTML = "No hay ningún producto para mostrar";
 
+  return newProduct;
+};
 
-export const buildNoProduct= ()=>{
-    //creo un nodo con mi html dentro
-    const newProduct = document.createElement('span')
-    newProduct.innerHTML="No hay ningún producto para mostrar"
-
-    return newProduct
-}
-
-export const buildEditProductForm = (product,productTags)=>{  
-    if (product.image === "../assets/product-photos/no_image.jpg"){
-        product.image=""
-    }  
-    return `
+export const buildEditProductForm = (product, productTags) => {
+  if (product.image === "../assets/product-photos/no_image.jpg") {
+    product.image = "";
+  }
+  return `
     <section>
         <div class="form-edit">
         <form>
@@ -77,6 +75,5 @@ export const buildEditProductForm = (product,productTags)=>{
 </div>
     
     
-    `
-
-}
+    `;
+};
