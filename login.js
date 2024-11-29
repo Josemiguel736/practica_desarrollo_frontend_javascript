@@ -12,7 +12,6 @@ if (isUserLoggedIn()){
 document.addEventListener("DOMContentLoaded", () => {
     //Definimos el notificationContainer será donde mostraremos las notificaciones 
     const notificationContainer = document.querySelector(".notification")
-    console.log(notificationContainer)
     //importamos la funcion showNotification
     const {showNotification:showBigNotification} = notificationController(notificationContainer)
     

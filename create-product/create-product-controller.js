@@ -1,42 +1,52 @@
 import { fireEvent } from "../utils/fireEvent.js"
+import { writeNotification } from "../utils/utils.js"
 import { createProduct } from "./create-product-model.js"
 
 
-export  function createProductController(createProduct){
-    createProduct.addEventListener("submit",(event)=>{
+export   function createProductController(createProductContainer){
+    createProductContainer.addEventListener("submit", async (event) =>{
         try {
         event.preventDefault()
-        const nameElement = createProduct.querySelector("#name")
+        const nameElement = createProductContainer.querySelector("#name")
         const name = nameElement.value
 
-        const descriptionElement = createProduct.querySelector("#description")
+        const descriptionElement = createProductContainer.querySelector("#description")
         const description = descriptionElement.value
 
-        const imageElement = createProduct.querySelector("#image")
+        const imageElement = createProductContainer.querySelector("#image")
+        if (imageElement.value === ""){
+            imageElement.value="../assets/product-photos/no_image.jpg"
+        }
         const image = imageElement.value
 
-        const typeProductElement = createProduct.querySelector("#typeProduct")
+        const typeProductElement = createProductContainer.querySelector("#typeProduct")
         const typeProduct = typeProductElement.value
 
-        const tagsProductElement = createProduct.querySelector("#tags")
+        const tagsProductElement = createProductContainer.querySelector("#tags")
         const tagsString = tagsProductElement.value
         const tagList =separateTags(tagsString)
 
-        const priceElement = createProduct.querySelector("#price")
+        const priceElement = createProductContainer.querySelector("#price")
         const price = Number(priceElement.value)
+        fireEvent("loading-spinner",createProductContainer)
         
-            handleProductCreation(name,description,image,typeProduct,price,tagList)
+          await handleProductCreation(name,description,image,typeProduct,price,tagList)
             
         } catch (error) {
             
-            fireEvent("notification",createProduct,error,"big","error")
+            fireEvent("notification",createProductContainer,error,"big","error")
+        }finally{
+            fireEvent("loading-spinner",createProductContainer)
+
         }
     })
 }
 
 async function  handleProductCreation(name,description,image,typeProduct,price,tagList){
+    
     const token = localStorage.getItem("jwt")
    await createProduct(name,description,image,typeProduct,price,tagList,token)
+   writeNotification("notification","Producto creado correctamente","big","success")
    window.location.href="/"
 
 }

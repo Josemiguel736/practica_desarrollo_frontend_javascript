@@ -3,9 +3,8 @@ export const buildDetailProduct= (product,productTags)=>{
     const tagString = productTags.join(", ")
     const newProduct = document.createElement('div')
     newProduct.setAttribute("class","product-detail")
-    if (product.image === ""){
-        product.image="assets/product-photos/no_image.jpg"
-    }
+    console.log(product.image)
+    
         newProduct.innerHTML=`        
         
         <img src=${product.image} alt=${product.name}>
@@ -43,7 +42,10 @@ export const buildNoProduct= ()=>{
     return newProduct
 }
 
-export const buildEditProductForm = (product,productTags)=>{    
+export const buildEditProductForm = (product,productTags)=>{  
+    if (product.image === "../assets/product-photos/no_image.jpg"){
+        product.image=""
+    }  
     return `
     <section>
         <div class="form-edit">

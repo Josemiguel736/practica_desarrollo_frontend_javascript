@@ -27,7 +27,7 @@ export async function createUser(email, password){
     
 
 export async function loginUser(email, password){
-    try {
+    
         const response = await fetch("http://localhost:8000/auth/login",{
             method:"POST",
             //mando los parametros por el body TIENEN QUE SER STRING por eso el metodo stringfy
@@ -42,15 +42,14 @@ export async function loginUser(email, password){
             }
         });
         if(!response.ok){
-            //si la api da error al crear usuario lanzo un error            
+            //si la api da error al crear usuario lanzo un error  
+            
+            
             throw new Error(response.status)
         }
         const {accessToken} = await response.json();
         return accessToken
         
-    } catch (error) {
-        throw error
-    }
     
 
 }

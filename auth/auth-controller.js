@@ -67,22 +67,28 @@ const handleCreateUser = async (userEmail,password,registerContainer)=>{
 }
 
 export function loginController(loginContainer){
-    
-    loginContainer.addEventListener("submit",(event)=>{
-        event.preventDefault()
-        const userEmailElement = loginContainer.querySelector("#mail")
-        const passwordElement = loginContainer.querySelector("#password")
 
-        const userEmail=userEmailElement.value
-        const password = passwordElement.value
-      
-        const emailRegExp = new RegExp(mailRegExp)
-        if(!emailRegExp.test(userEmail)){  
-            fireEvent("emailNotification",loginContainer,"El e-mail no es correcto","little","error")
-        }else{
-            handleLogin(userEmail,password,loginContainer)
-        }
-})}
+    try {
+        loginContainer.addEventListener("submit",(event)=>{
+            event.preventDefault()
+            const userEmailElement = loginContainer.querySelector("#mail")
+            const passwordElement = loginContainer.querySelector("#password")
+    
+            const userEmail=userEmailElement.value
+            const password = passwordElement.value
+          
+            const emailRegExp = new RegExp(mailRegExp)
+            if(!emailRegExp.test(userEmail)){  
+                fireEvent("emailNotification",loginContainer,"El e-mail no es correcto","little","error")
+            }else{
+                handleLogin(userEmail,password,loginContainer)
+            }
+    })
+        
+    } catch (error) {
+     fireEvent("notification",loginContainer,"El servidor no está disponible en este momento, por favor intentelo más tarde","big","error")         
+    }}
+    
 
 const handleLogin = async (userEmail,password,loginContainer)=>{
 
@@ -99,16 +105,16 @@ const handleLogin = async (userEmail,password,loginContainer)=>{
        //redireccion al index
        window.location.href="/"
     } catch (error) {
-        if (error.message==="Failed to fetch"){
-            fireEvent("notification",loginContainer,"El servidor no está disponible en este momento, por favor intentelo más tarde","big","error")   
-            
-        }else if(error===401){
+        
+        if(error.message==="401"){
             fireEvent("emailNotification",loginContainer,"Email o contraseña incorrectos","little","error")
         }
         else{
-            fireEvent("notification",loginContainer,(error),"big","error")   
+            
+            fireEvent("notification",loginContainer,"El servidor no está disponible en este momento, por favor intentelo más tarde","big","error")   
         }
     }finally{
+
         fireEvent("loading-spinner",loginContainer)
     }
 }

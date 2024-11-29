@@ -135,29 +135,33 @@ async function handlerEditProduct(product,productTags ,productContainer, product
             //evito la propagacion del evento
             event.preventDefault()
             const nameElement = productContainer.querySelector("#name")
-            const name = nameElement.value
-
-
             const descriptionElement = productContainer.querySelector("#description")
+            const typeProductElement = productContainer.querySelector("#typeProduct")
+            const tagsProductElement = productContainer.querySelector("#tags")
+            const priceElement = productContainer.querySelector("#price")
+
+            const validateElements = {nombre:nameElement,descripción:descriptionElement.value,tags:tagsProductElement.value,precio:priceElement.value}
+            
+            const name = nameElement.value   
             const description = descriptionElement.value
 
             const imageElement = productContainer.querySelector("#image")
+            if (imageElement.value === ""){
+                imageElement.value="../assets/product-photos/no_image.jpg"
+            }
             const image = imageElement.value
 
-            const typeProductElement = productContainer.querySelector("#typeProduct")
             const typeProduct = typeProductElement.value
 
-            const tagsProductElement = productContainer.querySelector("#tags")
-            const tagsProduct = tagsProductElement.value
+            const tagsProduct = tagsProductElement.value           
 
-            
-
-            const priceElement = productContainer.querySelector("#price")
             const price = priceElement.value
             try {
+                if(validateForm(validateElements)===true){
                 fireEvent("loading-spinner", productDetailContainer)
                 await callUpdateProduct(product, name, description, image, typeProduct,tagsProduct ,price)
                 writeNotification("notification","Producto actualizado correctamente","big","success")
+            }
             } catch (error) {
                 if (error.message === "Failed to fetch") {
                     fireEvent("notification", productDetailContainer, `Ahora mismo no se puede actualizar el producto, por favor intentelo más tarde`, "big", "error")
@@ -181,5 +185,26 @@ async function callUpdateProduct(product, name, description, image, typeProduct,
     }
 }
 
+function validateForm(validateElements){
+    const emtyItems = []
+    let alertMessage = "Por favor rellena"
 
+    for(const key in validateElements){
+        const value = validateElements[key]
+        if(value===""){
+            emtyItems.push(key)            
+        }
+    }
+
+    if (emtyItems.length!=0){
+        alertMessage +=` ${emtyItems.join(", ")} antes de continuar`
+        if (emtyItems.length>1){
+        const indexLastComma = alertMessage.lastIndexOf(",")
+        alertMessage = alertMessage.slice(0,indexLastComma)+" y"+alertMessage.slice(indexLastComma +1)
+    }
+        alert(alertMessage)
+        return false        
+    }
+    return true
+}
 

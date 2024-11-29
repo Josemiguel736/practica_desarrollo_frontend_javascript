@@ -9,7 +9,7 @@ export async function getProducts(formName, formMin, formMax, tagSearch,limit,pa
             limit=10
         }
         //conexion con la api para obtener productos
-        let url = `http://localhost:8000/api/products?_page=${page}&_limit=${limit}&` ;
+        let url = `http://localhost:8000/api/products?_sort=updatedAt&_order=desc&_page=${page}&_limit=${limit}&` ;
 
         if (formName) url += `name_like=${formName}&`
         if (formMax) url += `price_lte=${formMax}&`
@@ -47,40 +47,56 @@ export async function getProducts(formName, formMin, formMax, tagSearch,limit,pa
 
 export async function getTagsList() {
 
-    const response = await fetch("http://localhost:8000/api/tags?_limit=150")
-
-    if (!response.ok) {
-        throw new Error('Error al buscar el tag')
+    try {
+        const response = await fetch("http://localhost:8000/api/tags?_limit=150")
+    
+        if (!response.ok) {
+            throw new Error('Error al buscar los tags')
+        }
+        // Obtengo los datos de la respuesta
+        const data = await response.json()
+    
+        return data;
+        
+    } catch (error) {
+        throw new Error("Error al buscar los tags")        
     }
-    // Obtengo los datos de la respuesta
-    const data = await response.json()
 
-    return data;
 
 }
 
 export async function getTag(tag) {
 
-    const response = await fetch(`http://localhost:8000/api/tags?tag=${tag}`)
-
-    if (!response.ok) {
-        throw new Error('Error al buscar el tag')
+    try {
+        const response = await fetch(`http://localhost:8000/api/tags?tag=${tag}`)
+    
+        if (!response.ok) {
+            throw new Error('Error al buscar el tag')
+        }
+        // Obtengo los datos de la respuesta
+        const data = await response.json()
+    
+        return data        
+    } catch (error) {
+        throw new Error("Error al buscar el tags")  
+        
     }
-    // Obtengo los datos de la respuesta
-    const data = await response.json()
 
-    return data;
 
 }
 
-function isFinalPage(totalCount,limit,page){
+function isFinalPage(totalCount,limit,page){    
     
-    const totalPages = totalCount/limit
-    console.log(totalPages)
-    if(page >= totalPages){
-        return true
-    }else{
-        return false
+    try {
+        const totalPages = totalCount/limit
+        if(page >= totalPages){
+            return true
+        }else{
+            return false
+        }
+        
+    } catch (error) {
+        throw new Error("No se puede obtener la última página")        
     }
 
 }

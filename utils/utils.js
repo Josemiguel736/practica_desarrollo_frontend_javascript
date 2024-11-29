@@ -75,3 +75,12 @@ export async function getFilterTag(tagToLocate) {
    
   
 }
+
+export function getPage(){
+  const searchParams = new URLSearchParams(window.location.search)
+  let page = searchParams.get("page")
+  if(page===null){
+    page="1"
+  }
+  return page
+}

@@ -2,7 +2,7 @@
 import { buildFilter, buildNoProducts, buildProduct, drawPaginationButtons } from "./index-show-products-views.js"
 import { getProducts, getTag, getTagsList } from "./index-show-products-model.js"
 import { fireEvent } from "../utils/fireEvent.js"
-import { openAndFireNotification } from "../utils/utils.js"
+import { getPage, openAndFireNotification, writeNotification } from "../utils/utils.js"
 
 function drawProducts(products, productContainer) {
     
@@ -11,17 +11,14 @@ function drawProducts(products, productContainer) {
     productContainer.classList.remove("loading")
     if (products.length === 0) {
         const noProduct = buildNoProducts()
-        productContainer.appendChild(noProduct)       
-
+        productContainer.appendChild(noProduct)  
     } else {
         //si los hay llama en un bucle a buildProduct pasandole un objeto producto
         products.forEach(product => {
             const newProduct = buildProduct(product)
             productContainer.appendChild(newProduct)
-
         })
-    }
-    
+    }    
 }
 
 export async function showProducts(productContainer, products) {
@@ -40,21 +37,18 @@ export async function showProducts(productContainer, products) {
           }
         const {productsGet,end} = productsAndEnd
 
-      
-
-
         //vaciamos products container
         productContainer.innerHTML = ""
-
-        
-        
 
         //le enviamos el productContainer y una lista de objetos producto
         hiddenNextButton(end)
         drawProducts(productsGet, productContainer)
         openAndFireNotification(productContainer)
-        //Lanzamos una notificación indicando que los productos se cargaron correctamente
-        fireEvent("notification", productContainer, "Productos cargados correctamente", "big", "success")
+        const page = getPage()
+        if( page=== "1" ){
+            //Lanzamos una notificación indicando que los productos se cargaron correctamente
+            fireEvent("notification", productContainer, "Productos cargados correctamente", "big", "success")
+        }
 
     } catch (error) {
         //Si ha ocurrido un error lanzaremos una notificación al usuario
@@ -65,18 +59,22 @@ export async function showProducts(productContainer, products) {
 
 export async function filterDrawController(filterContainer) {
 
-    const tagsObjets = await getTagsList()
-    const searchParams = new URLSearchParams(window.location.search)
-    let page = searchParams.get("page")
+    try {
+        const tagsObjets = await getTagsList()
+        
+        const page = getPage()
     
-
-    const tagList = []
-    tagsObjets.forEach((tag) => {
-        tagList.push(tag.tag)
-    })
-    const filter = buildFilter(tagList,page)
-    
-    filterContainer.appendChild(filter)
+        const tagList = []
+        tagsObjets.forEach((tag) => {
+            tagList.push(tag.tag)
+        })
+        const filter = buildFilter(tagList,page)
+        
+        filterContainer.appendChild(filter)
+        
+    } catch (error) {
+        writeNotification("notification","Error al crear el filtro de búsqueda","big","error")
+    }
 }
 
 export async function filterProductsController(filterContainer,page) {
@@ -92,16 +90,12 @@ export async function filterProductsController(filterContainer,page) {
     const formTag = tagElement.value;
     const formLimit = Number(limitElement.value)
 
-
     let tagSearch = undefined
 
     if (formTag != "Todos") {
         tagSearch = await getTag(formTag)
         tagSearch = tagSearch[0].id
             }
-
-
-
     // Llamamos a getFilteredProducts pasando los parámetros que hemos recogido del formulario
     try {
         const filterProducts = await getProducts(formName, formMin, formMax, tagSearch,formLimit,page);
@@ -114,19 +108,16 @@ export async function filterProductsController(filterContainer,page) {
 export function paginationProductsController(paginationContainer){
 
     paginationContainer.innerHTML=""
-
     const searchParams = new URLSearchParams(window.location.search)
         const page = parseInt(searchParams.get("page")) || 1;
         paginationContainer.appendChild(drawPaginationButtons(page)) 
 }
-
 
 function hiddenNextButton(next){
     
     if(next){
         const nextButton=document.querySelector(".next-page")
         nextButton.setAttribute("class", "hidden")
-        console.log("algo")
-        console.log("aja")
+        
     }
 }

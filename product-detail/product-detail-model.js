@@ -18,7 +18,7 @@ export async function getProduct(productId) {
 
         //si sucede algún problema lanzamos un error con el mensaje
     } catch (error) {
-        throw new Error(error.message)
+        throw new Error("El servidor no responde, vuelva a intentarlo más tarde")
     }
 
 }
@@ -37,10 +37,8 @@ export async function deleteProduct(productId, token) {
                 "Content-type": "application/json",
                 "Authorization": `Bearer ${token} `
             }
-    });
-        if (response.ok) {
-            alert(`El producto se ha eliminado correctamente.`);
-        } else {
+    })
+     if(!response.ok) {
             
             if (response.status===401){
                 throw new Error((`No tienes permiso para eliminar este producto`))
@@ -50,7 +48,7 @@ export async function deleteProduct(productId, token) {
         }
         
     } catch (error) {
-        throw new Error(error.message)
+        throw new Error("No hemos podido eliminar tu producto, por favor intentelo más tarde")
 
     }
 
@@ -89,7 +87,7 @@ try {
 
     
 } catch (error) {
-    throw new Error(error.message)
+    throw new Error(`No hemos podido modificar tu producto, por favor intentelo más tarde`)
     
 }}
 
@@ -98,26 +96,33 @@ try {
 
 async function updateTagHandler(tagsString,token) {
 
-    const tagsId = []
+    try {
+        const tagsId = []
+        
+        const tags=tagsString.split(",")
     
-    const tags=tagsString.split(",")
-
-    // Primero, agregamos los tags y almacenamos sus ids
-    for (const tag of tags) {
-        // Busca si el tag ya existe en la lista
-        const tagFetch =await getFilterTag(tag.trim())
-        
-        const existingTag = tagFetch.find(t => t.tag === tag.trim())
-        
-        if (existingTag) {
-            tagsId.push(`%${existingTag.id}%`) // Si existe, agrega su id
-        } else {
-            // Si no existe, crea el tag
-            const response = await addTag(tag, token) 
-            tagsId.push(`%${response.id}%`) // Agrega el id del nuevo tag
+        // Primero, agregamos los tags y almacenamos sus ids
+        for (const tag of tags) {
+            // Busca si el tag ya existe en la lista
+            const tagFetch =await getFilterTag(tag.trim())
+            
+            const existingTag = tagFetch.find(t => t.tag === tag.trim())
+            
+            if (existingTag) {
+                tagsId.push(`%${existingTag.id}%`) // Si existe, agrega su id
+            } else {
+                // Si no existe, crea el tag
+                const response = await addTag(tag, token) 
+                tagsId.push(`%${response.id}%`) // Agrega el id del nuevo tag
+            }
         }
+        return tagsId
+        
+    } catch (error) {
+        throw new Error('Error al actualizar los tag')
+        
     }
-    return tagsId
+
 
     
 
