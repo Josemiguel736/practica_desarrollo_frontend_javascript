@@ -104,7 +104,7 @@ export function loginController(loginContainer) {
         fireEvent(
           "emailNotification",
           loginContainer,
-          "El e-mail no es correcto",
+          "El email no tiene un formato correcto",
           "little",
           "error"
         );

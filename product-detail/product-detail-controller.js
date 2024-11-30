@@ -77,6 +77,12 @@ async function callDeleteProduct(productId) {
   try {
     const token = localStorage.getItem("jwt");
     await deleteProduct(productId, token);
+    writeNotification(
+      "notification",
+      "Producto eliminado correctamente",
+      "big",
+      "success"
+    );
     window.location.href = "/";
   } catch (error) {
     throw new Error(error);

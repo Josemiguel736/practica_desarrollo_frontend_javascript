@@ -3,33 +3,28 @@ import {
   buildNoProducts,
   buildProduct,
   drawPaginationButtons,
-  hiddenNextButton
+  hiddenNextButton,
 } from "./index-show-products-views.js";
-import {
-  getProducts,
-  getTagsList,
-} from "./index-show-products-model.js";
+import { getProducts, getTagsList } from "./index-show-products-model.js";
 import { fireEvent } from "../utils/fireEvent.js";
 import {
   getPage,
   openAndFireNotification,
   writeNotification,
-  getTag
+  getTag,
 } from "../utils/utils.js";
 
 /**
  * Pinta o productos o un cartel de no hay productos
  */
 function drawProducts(products, productContainer) {
- 
-  
   productContainer.classList.remove("loading");
   if (products.length === 0) {
     const noProduct = buildNoProducts();
     productContainer.appendChild(noProduct);
   } else {
     //si los hay llama en un bucle a buildProduct pasandole un objeto producto
-    
+
     products.forEach((product) => {
       const newProduct = buildProduct(product);
       productContainer.appendChild(newProduct);
@@ -46,25 +41,23 @@ export async function showProducts(productContainer, products) {
   fireEvent("loading-spinner", productContainer);
 
   try {
-    
-    const page = getPage()
-    //Comprobamos si hemos recibido ya los productos o no, en caso negativo los buscamos 
+    const page = getPage();
+    //Comprobamos si hemos recibido ya los productos o no, en caso negativo los buscamos
     let productsAndEnd;
     if (products) {
-      
       productsAndEnd = products;
-    } else {            
+    } else {
       productsAndEnd = await getProducts(null, null, null, null, null, page);
     }
-    const { productsGet, end } = productsAndEnd;
-    
+    const { productsGet, end, finalPage } = productsAndEnd;
 
     //vaciamos products container
-    productContainer.innerHTML = "";    
+    productContainer.innerHTML = "";
+    isTheLastPage(end, finalPage);
     hiddenNextButton(end);
     drawProducts(productsGet, productContainer);
     openAndFireNotification(productContainer);
-    
+
     if (page === "1") {
       //Lanzamos una notificación indicando que los productos se cargaron correctamente
       fireEvent(
@@ -126,7 +119,7 @@ export async function filterProductsController(filterContainer, page) {
     tagSearch = await getTag(formTag);
     tagSearch = tagSearch[0].id;
   }
-  
+
   // Llamamos a getFilteredProducts pasando los parámetros que hemos recogido del formulario
   try {
     const filterProducts = await getProducts(
@@ -147,8 +140,30 @@ export async function filterProductsController(filterContainer, page) {
  * Maneja la lógica para pintar los botones de paginacion
  */
 export function paginationProductsController(paginationContainer) {
-  paginationContainer.innerHTML = "";  
-  const page = getPage()
+  paginationContainer.innerHTML = "";
+  const page = getPage();
   paginationContainer.appendChild(drawPaginationButtons(page));
 }
 
+/**
+ * Si el usuario cambia de tag en el filtro pero no le da a submit
+ * evita que filtre y vaya a una página vacia
+ */
+function isTheLastPage(end, finalPage) {
+  if (end) {
+    const page = getPage();
+    if (page > finalPage) {
+      let endPage = page - 1;
+      while (endPage > finalPage) {
+        endPage -= 1;
+      }
+      if (endPage <= finalPage) {
+        const currentUrl = new URL(window.location.href);
+        const searchParams = new URLSearchParams(currentUrl.search);
+        searchParams.set("page", `${endPage}`);
+        currentUrl.search = searchParams.toString();
+        window.location.href = currentUrl.toString();
+      }
+    }
+  }
+}

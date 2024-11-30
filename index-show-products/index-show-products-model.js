@@ -40,11 +40,12 @@ export async function getProducts(
     }
     const totalCount = Number(productsResponse.headers.get("X-Total-Count"));
     const end = isFinalPage(totalCount, limit, page);
+    const finalPage = FinalPage(totalCount,limit)
 
     const products = await productsResponse.json();
 
     const productsGet = await joinProductsWidthTags(products);
-    return { productsGet, end };
+    return { productsGet, end,finalPage };
   } catch (error) {
     throw new Error(
       "El servidor no responde, por favor vuelva a intentarlo más tarde"
@@ -84,6 +85,15 @@ function isFinalPage(totalCount, limit, page) {
     } else {
       return false;
     }
+  } catch (error) {
+    throw new Error("No se puede obtener la última página");
+  }
+}
+
+function FinalPage(totalCount, limit) {
+  try {
+    const totalPages = totalCount / limit;
+    return totalPages
   } catch (error) {
     throw new Error("No se puede obtener la última página");
   }
