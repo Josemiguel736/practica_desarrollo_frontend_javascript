@@ -1,3 +1,6 @@
+/**
+ * Vista de la ruleta de carga
+ */
 export const drawSpinner = `
         <span class="letter">A</span>
         <span class="letter">p</span>

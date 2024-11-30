@@ -3,25 +3,33 @@ import { fireEvent } from "./fireEvent.js";
 export const mailRegExp =
   "[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}";
 
+  /**
+ * Comprueba si el usuario esta logueado, devuelve un bool
+ */
 export const isUserLoggedIn = () => {
   //busco en el local Storage el json web token
   const token = localStorage.getItem("jwt");
-
   //transformacion a booleano y retorno un boolean
   return !!token;
 };
 
+/**
+ * Escribe en el localStorage un item llamado notificación
+ */
 export const writeNotification = (eventName, messagge, format, type) => {
   const notification = { eventName, messagge, format, type };
   localStorage.setItem("notification", JSON.stringify(notification));
 };
 
-export const openAndFireNotification = (element) => {
+/**
+ * Busca en el localStorage un item llamado notificación si existe lanza una notificacion del tipo que se le indica
+ */
+export const openAndFireNotification = (container) => { 
   const notification = JSON.parse(localStorage.getItem("notification"));
   if (notification) {
     fireEvent(
       notification.eventName,
-      element,
+      container,
       notification.messagge,
       notification.format,
       notification.type
@@ -31,11 +39,17 @@ export const openAndFireNotification = (element) => {
   }
 };
 
+/**
+ * Escribe en el localStorage un objeto llamado objet
+ */
 export const sendObjet = (item) => {
   const objet = { item };
   localStorage.setItem("objet", JSON.stringify(objet));
 };
 
+/**
+ * Busca en el localStorage un item llamado objet devuelve un objeto
+ */
 export const openObjet = () => {
   const objet = JSON.parse(localStorage.getItem("objet"));
   if (objet) {
@@ -43,25 +57,58 @@ export const openObjet = () => {
   }
 };
 
-export function joinProductsWidthTags(products, tags) {
-  const productsWidthTags = products.map((product) => {
-    // Transformo cada producto
-    return {
-      ...product, // Copio todas las propiedades originales del producto
-      tags: product.tagsList.map((tagId) => {
-        //limpio el tagId
-        const cleanTag = Number(tagId.split("%").join(""));
-        // Busco cada tagId
-        const tag = tags.find((tag) => tag.id === cleanTag);
-        //retorno el tag correcto
-        return tag.tag;
-      }),
-    };
-  });
-  return productsWidthTags;
+/**
+ * Une los productos con sus tags
+ * retorna un array de productos con tags 
+ */
+export async function joinProductsWidthTags(products) {
+  const productsWithTags = await Promise.all(
+    products.map(async (product) => {
+      const resolvedTags = await Promise.all(
+        product.tagsList.map(async (tagId) => {
+          // Limpia el tagId
+          const cleanTag = Number(tagId.split("%").join(""));
+          // Busca el tag correspondiente
+          const tag = await getTagId(cleanTag);
+          // Retorna el tag correcto
+          
+          return tag;
+        })
+      );
+
+      // Devuelve el producto con los tags resueltos
+      return {
+        ...product,
+        tags: resolvedTags,
+      };
+    })
+  );
+
+
+  return productsWithTags;
 }
 
-export async function getFilterTag(tagToLocate) {
+
+
+
+/**
+ * Comprueba la página actual mediante search params
+ * si no hay search params detectara la página actual como la 1
+ */
+export function getPage() {
+  const searchParams = new URLSearchParams(window.location.search);
+  let page = searchParams.get("page");
+  if (page === null) {
+    page = "1";
+  }
+  return page;
+}
+
+/**
+ * Hace una petición a la API para obtener un tag
+ * retorna un tag
+ */
+export async function getTag(tagToLocate) {
   const response = await fetch(
     `http://localhost:8000/api/tags?tag=${tagToLocate}`
   );
@@ -75,11 +122,16 @@ export async function getFilterTag(tagToLocate) {
   return tagFind;
 }
 
-export function getPage() {
-  const searchParams = new URLSearchParams(window.location.search);
-  let page = searchParams.get("page");
-  if (page === null) {
-    page = "1";
+export async function getTagId(tagToLocate) {
+  const response = await fetch(
+    `http://localhost:8000/api/tags?id=${tagToLocate}`
+  );
+ 
+
+  if (!response.ok) {
+    throw new Error("Error al buscar el tag");
   }
-  return page;
+  // Obtengo los datos de la respuesta
+  const tagFind = await response.json();
+  return tagFind[0].tag;
 }

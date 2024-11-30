@@ -19,8 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
   //llamo al sessionController para definir como se mostrará la navbar
   sessionController(sessionContainer);
 
+  //Iniciamos los botones de pagnación
   const paginationContainer = document.querySelector(".paginationButtons");
   paginationProductsController(paginationContainer);
+
 
   const productContainer = document.querySelector(".products"); //Definimos el productContainer será donde mostraremos los productos
 
@@ -30,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadingSpinner(productContainer);
   });
 
+  //Pintamos el filtro de productos
   const filterContainer = document.querySelector(".filter-content");
   filterDrawController(filterContainer);
 
@@ -45,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
+  //filtramos los productos
   filterContainer.addEventListener("submit", async (event) => {
     event.preventDefault();
     const products = await filterProductsController(filterContainer);
@@ -52,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     searchParams.set("page", 1);
     history.pushState(null, "", `?${searchParams.toString()}`);
     paginationProductsController(paginationContainer);
-    showProducts(productContainer, products);
+    await showProducts(productContainer, products);
   });
 
   filterContainer.addEventListener("notification", async (event) => {
@@ -90,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       paginationProductsController(paginationContainer);
-      showProducts(productContainer, products);
+      await showProducts(productContainer, products);
     }
   });
 });

@@ -1,3 +1,6 @@
+/**
+ * Pinta un navbar con botones para crear un producto y desloquear
+ */
 export function buildAuthorizedSession() {
   return `
    <a href="/"> <h3>ApiPop</h3></a>
@@ -8,6 +11,9 @@ export function buildAuthorizedSession() {
     `;
 }
 
+/**
+ * Pinta un navbar con botones para crear un usuario y loquear
+ */
 export function buildUnauthorizedSession() {
   return `
       <a href="/"> <h3>ApiPop</h3></a>      

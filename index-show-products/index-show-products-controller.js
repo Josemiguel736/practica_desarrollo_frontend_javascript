@@ -3,10 +3,10 @@ import {
   buildNoProducts,
   buildProduct,
   drawPaginationButtons,
+  hiddenNextButton
 } from "./index-show-products-views.js";
 import {
   getProducts,
-  getTag,
   getTagsList,
 } from "./index-show-products-model.js";
 import { fireEvent } from "../utils/fireEvent.js";
@@ -14,17 +14,22 @@ import {
   getPage,
   openAndFireNotification,
   writeNotification,
+  getTag
 } from "../utils/utils.js";
 
+/**
+ * Pinta o productos o un cartel de no hay productos
+ */
 function drawProducts(products, productContainer) {
-  //comprueba si hay productos para mostrar
-  //si no hay productos llama a buildNoProducts para pintar que no hay productos
+ 
+  
   productContainer.classList.remove("loading");
   if (products.length === 0) {
     const noProduct = buildNoProducts();
     productContainer.appendChild(noProduct);
   } else {
     //si los hay llama en un bucle a buildProduct pasandole un objeto producto
+    
     products.forEach((product) => {
       const newProduct = buildProduct(product);
       productContainer.appendChild(newProduct);
@@ -32,30 +37,34 @@ function drawProducts(products, productContainer) {
   }
 }
 
+/**
+ * Maneja la lógica para obtener productos y pintarlos
+ * controla los estados de carga y error
+ */
 export async function showProducts(productContainer, products) {
   //Iniciamos la ruleta de carga
   fireEvent("loading-spinner", productContainer);
 
   try {
-    //Llamamos a la base de datos y si sale bien a drawProducts
+    
+    const page = getPage()
+    //Comprobamos si hemos recibido ya los productos o no, en caso negativo los buscamos 
     let productsAndEnd;
     if (products) {
+      
       productsAndEnd = products;
-    } else {
-      const searchParams = new URLSearchParams(window.location.search);
-      const page = parseInt(searchParams.get("page")) || 1;
+    } else {            
       productsAndEnd = await getProducts(null, null, null, null, null, page);
     }
     const { productsGet, end } = productsAndEnd;
+    
 
     //vaciamos products container
-    productContainer.innerHTML = "";
-
-    //le enviamos el productContainer y una lista de objetos producto
+    productContainer.innerHTML = "";    
     hiddenNextButton(end);
     drawProducts(productsGet, productContainer);
     openAndFireNotification(productContainer);
-    const page = getPage();
+    
     if (page === "1") {
       //Lanzamos una notificación indicando que los productos se cargaron correctamente
       fireEvent(
@@ -68,22 +77,22 @@ export async function showProducts(productContainer, products) {
     }
   } catch (error) {
     //Si ha ocurrido un error lanzaremos una notificación al usuario
-
-    fireEvent("notification", productContainer, `${error}`, "big", "error");
+    fireEvent("notification", productContainer, error, "big", "error");
   }
 }
 
+/**
+ * Maneja la lógica para pintar el filtro de busqueda
+ */
 export async function filterDrawController(filterContainer) {
   try {
-    const tagsObjets = await getTagsList();
-
-    const page = getPage();
+    const tagsObjets = await getTagsList(); //lista de todos los tags ALERT: puede crear problemas buscar todos los tags así
 
     const tagList = [];
     tagsObjets.forEach((tag) => {
       tagList.push(tag.tag);
     });
-    const filter = buildFilter(tagList, page);
+    const filter = buildFilter(tagList);
 
     filterContainer.appendChild(filter);
   } catch (error) {
@@ -96,6 +105,9 @@ export async function filterDrawController(filterContainer) {
   }
 }
 
+/**
+ * Maneja la lógica para filtrar
+ */
 export async function filterProductsController(filterContainer, page) {
   const nameElement = filterContainer.querySelector("#name");
   const minElement = filterContainer.querySelector("#min");
@@ -107,14 +119,14 @@ export async function filterProductsController(filterContainer, page) {
   const formMin = minElement.value;
   const formMax = maxElement.value;
   const formTag = tagElement.value;
-  const formLimit = Number(limitElement.value);
+  const formLimit = limitElement.value;
 
   let tagSearch = undefined;
-
   if (formTag != "Todos") {
     tagSearch = await getTag(formTag);
     tagSearch = tagSearch[0].id;
   }
+  
   // Llamamos a getFilteredProducts pasando los parámetros que hemos recogido del formulario
   try {
     const filterProducts = await getProducts(
@@ -131,16 +143,12 @@ export async function filterProductsController(filterContainer, page) {
   }
 }
 
+/**
+ * Maneja la lógica para pintar los botones de paginacion
+ */
 export function paginationProductsController(paginationContainer) {
-  paginationContainer.innerHTML = "";
-  const searchParams = new URLSearchParams(window.location.search);
-  const page = parseInt(searchParams.get("page")) || 1;
+  paginationContainer.innerHTML = "";  
+  const page = getPage()
   paginationContainer.appendChild(drawPaginationButtons(page));
 }
 
-function hiddenNextButton(next) {
-  if (next) {
-    const nextButton = document.querySelector(".next-page");
-    nextButton.setAttribute("class", "hidden");
-  }
-}

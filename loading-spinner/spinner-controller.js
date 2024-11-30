@@ -1,5 +1,9 @@
 import { drawSpinner } from "./spinner.views.js";
 
+
+/**
+ * Controla la lógica para pintar la ruleta de carga
+ */
 export const loadingSpinner = (container) => {
   try {
     //busca el nodo donde cargar el spinner

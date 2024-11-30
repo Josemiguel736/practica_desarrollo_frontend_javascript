@@ -1,3 +1,7 @@
+
+/**
+ * pinta notificaciones
+ */
 export const buildNotification = (notification, format, type) => {
   return `
     <div class="notification ${format} ${type}">

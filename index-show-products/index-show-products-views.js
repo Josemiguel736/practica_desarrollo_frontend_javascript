@@ -1,4 +1,6 @@
-//html que vamos a mostrar a nuestro usuario
+/**
+ * Pinta un producto
+ */
 export const buildProduct = (product, page) => {
   //convierto la lista de tags a un string
   const tagString = product.tags.join(", ");
@@ -23,6 +25,9 @@ export const buildProduct = (product, page) => {
   return newProduct;
 };
 
+/**
+ * Pinta un aviso de que no hay productos para mostrar
+ */
 export const buildNoProducts = () => {
   //creo un nodo con mi html dentro
   const newProduct = document.createElement("span");
@@ -31,6 +36,9 @@ export const buildNoProducts = () => {
   return newProduct;
 };
 
+/**
+ * Pinta el filtro de productos
+ */
 export const buildFilter = (tagList) => {
   const form = document.createElement("form");
   form.setAttribute("class", "filter");
@@ -77,6 +85,11 @@ export const buildFilter = (tagList) => {
   return form;
 };
 
+/**
+ * Pinta los botones de paginación
+ * comprueba si la página es 1 y oculta el botón de 
+ * página anterior
+ */
 export function drawPaginationButtons(page) {
   // Controles de paginación
   const paginationContainer = document.createElement("div");
@@ -99,4 +112,14 @@ export function drawPaginationButtons(page) {
   paginationContainer.appendChild(prevButton);
   paginationContainer.appendChild(nextButton);
   return paginationContainer;
+}
+
+/**
+ * Oculta el boton de siguiente
+ */
+export function hiddenNextButton(end) {
+  if (end) {
+    const nextButton = document.querySelector(".next-page");
+    nextButton.setAttribute("class", "hidden");
+  }
 }

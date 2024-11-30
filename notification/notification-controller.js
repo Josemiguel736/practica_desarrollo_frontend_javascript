@@ -1,5 +1,8 @@
 import { buildNotification } from "./notification-views.js";
 
+/**
+ * Controla la lógica para pintar notificaciones
+ */
 export const notificationController = (notificationContainer) => {
   let isNotificationActive = false; // Indica si hay una notificación en curso
   const notificationQueue = []; // Cola de notificaciones pendientes
@@ -41,6 +44,9 @@ export const notificationController = (notificationContainer) => {
     processQueue(); // Procesa la siguiente notificación en la cola
   };
 
+  /**
+ * Recibe una notificación y la añade a la cola de notificaciones
+ */
   const showNotification = async (notification, format, type = "success") => {
     // Agrego la nueva notificación a la cola
     notificationQueue.push({ notification, format, type });

@@ -13,22 +13,26 @@ import {
 import { fireEvent } from "../utils/fireEvent.js";
 import { writeNotification } from "../utils/utils.js";
 
+/**
+ * Controla la lógica para pintar el detalle de un producto
+ * editar un producto y borrar un producto
+ */
 export async function productDetailController(
   productDetailContainer,
   productId,
   productQueryTags
 ) {
-  try {
-    //Iniciamos la ruleta de carga
+  try {   
     fireEvent("loading-spinner", productDetailContainer);
     const product = await getProduct(productId);
-
     const productTags = productQueryTags.split("%2C");
     productDetailContainer.appendChild(
       buildDetailProduct(product, productTags)
     );
+
     await handleDrawOptionButtons(product, productTags, productDetailContainer);
   } catch (error) {
+
     if (error.message === "Failed to fetch") {
       fireEvent(
         "notification",
@@ -54,6 +58,9 @@ export async function productDetailController(
   }
 }
 
+/**
+ * Busca del dueño de un producto, retorna su user id
+ */
 async function ownerOfProduct() {
   try {
     const user = await getCurrentUserInfo();
@@ -63,6 +70,9 @@ async function ownerOfProduct() {
   }
 }
 
+/**
+ * Llama al modelo para borrar un producto
+ */
 async function callDeleteProduct(productId) {
   try {
     const token = localStorage.getItem("jwt");
@@ -73,6 +83,9 @@ async function callDeleteProduct(productId) {
   }
 }
 
+/**
+ * Controla la lógica para pintar o no los botones de opción
+ */
 async function handleDrawOptionButtons(
   product,
   productTags,
@@ -100,13 +113,13 @@ async function handleDrawOptionButtons(
       //escucho el evento submit en el boton de borrado
 
       deleteButton.addEventListener("submit", async (event) => {
-        //evito la propagacion del evento
+        
         event.preventDefault();
         await handlerProductDelete(product, productDetailContainer);
       });
 
       editButton.addEventListener("submit", async (event) => {
-        //evito la propagacion del evento
+        
         event.preventDefault();
         await handlerEditProduct(
           product,
@@ -127,6 +140,9 @@ async function handleDrawOptionButtons(
   }
 }
 
+/**
+ * Controla la lógica para borrar un producto
+ */
 async function handlerProductDelete(product, productDetailContainer) {
   //pido confirmación antes de borrar el producto
   const confirmDeleteProduct = confirm("Seguro que esea borrar el producto?");
@@ -162,6 +178,9 @@ async function handlerProductDelete(product, productDetailContainer) {
   }
 }
 
+/**
+ * Controla la lógica para editar un producto
+ */
 async function handlerEditProduct(
   product,
   productTags,
@@ -171,11 +190,9 @@ async function handlerEditProduct(
   try {
     productContainer.innerHTML = buildEditProductForm(product, productTags);
 
-    const select = productContainer.querySelector("#typeProduct");
-    if (select) {
-      // Establece el valor basado en product.typeProduct
-      select.value = product.typeProduct; // Suponiendo que "typeProduct" es el campo correspondiente
-    }
+    // Establece el valor basado en product.typeProduct
+    const select = productContainer.querySelector("#typeProduct");   
+    select.value = product.typeProduct;     
 
     const editProductContainer = productContainer.querySelector(".edit-button");
     editProductContainer.addEventListener("click", async (event) => {
@@ -188,7 +205,7 @@ async function handlerEditProduct(
       const priceElement = productContainer.querySelector("#price");
 
       const validateElements = {
-        nombre: nameElement,
+        nombre: nameElement.value,
         descripción: descriptionElement.value,
         tags: tagsProductElement.value,
         precio: priceElement.value,
@@ -252,6 +269,9 @@ async function handlerEditProduct(
   }
 }
 
+/**
+ * Llama al modelo para actualizar un producto
+ */
 async function callUpdateProduct(
   product,
   name,
@@ -279,6 +299,9 @@ async function callUpdateProduct(
   }
 }
 
+/**
+ * Valida que el formulario sea valido, retorna un bool
+ */
 function validateForm(validateElements) {
   const emtyItems = [];
   let alertMessage = "Por favor rellena";

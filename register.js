@@ -1,4 +1,4 @@
-import { registerUser } from "./auth/auth-controller.js";
+import { registerUserModel } from "./auth/auth-controller.js";
 import { loadingSpinner } from "./loading-spinner/spinner-controller.js";
 import { sessionController } from "./session/session-controller.js";
 import { isUserLoggedIn } from "./utils/utils.js";
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   const registerContainer = document.querySelector(".auth"); // El contenedor de la autenticación
-  registerUser(registerContainer); // Pasamos el contenedor a la función
+  registerUserModel(registerContainer); // Pasamos el contenedor a la función
 
   const emailContainer = registerContainer.querySelector("#notificationMail");
   const passContainer = registerContainer.querySelector("#notificationPass");

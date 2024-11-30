@@ -3,9 +3,15 @@ import { fireEvent } from "../utils/fireEvent.js";
 import { mailRegExp, writeNotification } from "../utils/utils.js";
 import { loginUser } from "./auth-model.js";
 
-export function registerUser(registerContainer) {
+/**
+ * Maneja la logica necesaria para registrar a un usuario
+ * recoje los parametros de la query y los valida
+ */
+export function registerUserModel(registerContainer) {
   registerContainer.addEventListener("submit", (event) => {
     event.preventDefault();
+
+    //Recogemos los valores de la query
     const userEmailElement = registerContainer.querySelector("#mail");
     const passwordElement = registerContainer.querySelector("#password");
     const passwordConfirmElement =
@@ -16,13 +22,12 @@ export function registerUser(registerContainer) {
     const passwordConfirm = passwordConfirmElement.value;
 
     //buscamos errores
-    //si los hay, añadimos errores a la lista de errores
     const emailRegExp = new RegExp(mailRegExp);
     const errors = [];
     if (!emailRegExp.test(userEmail)) {
-      errors.push(["el email no es valido", "emailNotification"]);
+      errors.push(["el email no es valido", "emailNotification"]); //si los hay, añadimos errores a la lista de errores
     } else {
-      fireEvent("emailNotification", registerContainer, "", "little", "error");
+      fireEvent("emailNotification", registerContainer, "", "little", "error"); //Si no hay errorres reiniciamos los valores a ""
     }
     if (password != passwordConfirm) {
       errors.push(["las password no son iguales", "passNotification"]);
@@ -30,22 +35,24 @@ export function registerUser(registerContainer) {
       fireEvent("passNotification", registerContainer, "", "little", "error");
     }
     for (const error of errors) {
-      //enviar notificaciones de error
-      fireEvent(error[1], registerContainer, error[0], "little", "error");
+      fireEvent(error[1], registerContainer, error[0], "little", "error"); //Si ha habido errores enviamos notificaciones de error
     }
     if (errors.length === 0) {
-      //consumimos sparrest para crear el usuario
       handleCreateUser(userEmail, password, registerContainer);
     }
   });
 }
 
+/**
+ * Hace una petición al modelo para crear el usuario y también lo loguea
+ * maneja los estados de carga y error
+ */
 const handleCreateUser = async (userEmail, password, registerContainer) => {
   fireEvent("loading-spinner", registerContainer);
   try {
-    await createUser(userEmail, password);
-    const token = await loginUser(userEmail, password);
-    localStorage.setItem("jwt", token);
+    await createUser(userEmail, password); //Llamamos al modelo para crear el usuario
+    const token = await loginUser(userEmail, password); //Lo logueamos y recibimos el token de usuario de la respuesta
+    localStorage.setItem("jwt", token); //guardamos su token
     writeNotification(
       "notification",
       "Usuario creado correctamente",
@@ -53,10 +60,10 @@ const handleCreateUser = async (userEmail, password, registerContainer) => {
       "success"
     );
 
-    //redireccion al index
     window.location.href = "/";
   } catch (error) {
     if (error.message === "Failed to fetch") {
+      //Según el error que nos mande el modelo informaremos de una forma u otra
       fireEvent(
         "notification",
         registerContainer,
@@ -72,14 +79,16 @@ const handleCreateUser = async (userEmail, password, registerContainer) => {
         "little",
         "error"
       );
-    } else {
-      fireEvent("notification", registerContainer, error, "big", "error");
     }
   } finally {
     fireEvent("loading-spinner", registerContainer);
   }
 };
 
+/**
+ * Maneja la logica necesaria para logear a un usuario
+ * recibe los parametros de la query y los valida
+ */
 export function loginController(loginContainer) {
   try {
     loginContainer.addEventListener("submit", (event) => {
@@ -114,23 +123,23 @@ export function loginController(loginContainer) {
   }
 }
 
+/**
+ * Hace una petición al modelo para logear al usuario
+ * Maneja estados de carga y error
+ */
 const handleLogin = async (userEmail, password, loginContainer) => {
   try {
     fireEvent("loading-spinner", loginContainer);
 
-    //llamo al modelo del login
-    const token = await loginUser(userEmail, password);
+    const token = await loginUser(userEmail, password); //llama al modelo del login
     writeNotification(
       "notification",
       "Sesión iniciada correctamente",
       "big",
       "success"
     );
-
-    //guardo su token
     localStorage.setItem("jwt", token);
 
-    //redireccion al index
     window.location.href = "/";
   } catch (error) {
     if (error.message === "401") {

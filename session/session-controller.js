@@ -3,12 +3,16 @@ import {
   buildUnauthorizedSession,
 } from "./session-views.js";
 import { isUserLoggedIn } from "../utils/utils.js";
+
+/**
+ * Maneja la lógica para saber si tienes una sesion iniciada o no
+ */
 export function sessionController(sessionContainer) {
   if (isUserLoggedIn()) {
     //mostrar un boton crear producto y otro para borrar el token de sesión
     sessionContainer.innerHTML = buildAuthorizedSession();
 
-    //gestion boton borrar token
+    //gestion boton deslogear
     //busco el boton de cerrar sesion
     const closeSessioButton = sessionContainer.querySelector("button");
 

@@ -1,3 +1,7 @@
+
+/**
+ * Pinta un producto
+ */
 export const buildDetailProduct = (product, productTags) => {
   //creo un nodo con mi html dentro
   const tagString = productTags.join(", ");
@@ -18,6 +22,9 @@ export const buildDetailProduct = (product, productTags) => {
   return newProduct;
 };
 
+/**
+ * Pinta los botones de editar y borrar
+ */
 export const deleteAndEditButton = () => {
   //creo un nodo con mi html dentro
   const deleteAndEditButton = document.createElement("div");
@@ -32,6 +39,9 @@ export const deleteAndEditButton = () => {
   return deleteAndEditButton;
 };
 
+/**
+ * Pinta un mensaje de no hay productos
+ */
 export const buildNoProduct = () => {
   //creo un nodo con mi html dentro
   const newProduct = document.createElement("span");
@@ -40,6 +50,9 @@ export const buildNoProduct = () => {
   return newProduct;
 };
 
+/**
+ * Pinta el formulario para editar un producto
+ */
 export const buildEditProductForm = (product, productTags) => {
   if (product.image === "../assets/product-photos/no_image.jpg") {
     product.image = "";

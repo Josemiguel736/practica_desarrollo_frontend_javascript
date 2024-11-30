@@ -2,10 +2,16 @@ import { fireEvent } from "../utils/fireEvent.js";
 import { writeNotification } from "../utils/utils.js";
 import { createProduct } from "./create-product-model.js";
 
+/**
+ * Maneja la lógica para crear un producto
+ * maneja los estados de error y de carga
+ */
 export function createProductController(createProductContainer) {
   createProductContainer.addEventListener("submit", async (event) => {
     try {
       event.preventDefault();
+
+      //recibimos los parametros de la query
       const nameElement = createProductContainer.querySelector("#name");
       const name = nameElement.value;
 
@@ -13,7 +19,7 @@ export function createProductController(createProductContainer) {
         createProductContainer.querySelector("#description");
       const description = descriptionElement.value;
 
-      const imageElement = createProductContainer.querySelector("#image");
+      const imageElement = createProductContainer.querySelector("#image"); //si image no está informado le daremos una imágen por defecto
       if (imageElement.value === "") {
         imageElement.value = "../assets/product-photos/no_image.jpg";
       }
@@ -29,6 +35,7 @@ export function createProductController(createProductContainer) {
 
       const priceElement = createProductContainer.querySelector("#price");
       const price = Number(priceElement.value);
+
       fireEvent("loading-spinner", createProductContainer);
 
       await handleProductCreation(
@@ -40,13 +47,21 @@ export function createProductController(createProductContainer) {
         tagList
       );
     } catch (error) {
-      fireEvent("notification", createProductContainer, error, "big", "error");
+      fireEvent(
+        "notification",
+        createProductContainer,
+        "No se ha podido crear el producto, intentelo más tarde",
+        "big",
+        "error"
+      );
     } finally {
       fireEvent("loading-spinner", createProductContainer);
     }
   });
 }
-
+/**
+ * Llama al modelo para crear el producto
+ */
 async function handleProductCreation(
   name,
   description,
@@ -55,31 +70,33 @@ async function handleProductCreation(
   price,
   tagList
 ) {
-  const token = localStorage.getItem("jwt");
-  await createProduct(
-    name,
-    description,
-    image,
-    typeProduct,
-    price,
-    tagList,
-    token
-  );
-  writeNotification(
-    "notification",
-    "Producto creado correctamente",
-    "big",
-    "success"
-  );
-  window.location.href = "/";
+  try {
+    const token = localStorage.getItem("jwt");
+    await createProduct(
+      name,
+      description,
+      image,
+      typeProduct,
+      price,
+      tagList,
+      token
+    );
+    writeNotification(
+      "notification",
+      "Producto creado correctamente",
+      "big",
+      "success"
+    );
+    window.location.href = "/";
+  } catch (error) {
+    throw error;
+  }
 }
 
+/**
+ * Recibe un string con tags separados con comas y devuelve una lista de strings
+ */
 function separateTags(tagsString) {
-  if (tagsString != "") {
-    const listOfTags = tagsString.split(",").map((item) => item.trim());
-
-    return listOfTags;
-  } else {
-    return undefined;
-  }
+  const listOfTags = tagsString.split(",").map((item) => item.trim());
+  return listOfTags;
 }

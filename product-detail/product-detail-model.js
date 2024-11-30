@@ -1,12 +1,15 @@
-import { getFilterTag } from "../utils/utils.js";
+import { getTag } from "../utils/utils.js";
+
+/**
+ * Obtiene un producto y el usuario que lo creoy los retorna
+ * 
+ */
 export async function getProduct(productId) {
   try {
-    //Recibo el product asociado al productId que envío además de los datos del usuario dueño de ese producto
     const response = await fetch(
       `http://localhost:8000/api/products/${productId}?_expand=user`
     );
 
-    //validamos la respuesta de la api y si no es valida lanzamos un error
     if (!response.ok) {
       throw new Error("El recurso no existe");
     }
@@ -15,12 +18,14 @@ export async function getProduct(productId) {
     const product = await response.json();
     return product;
 
-    //si sucede algún problema lanzamos un error con el mensaje
   } catch (error) {
     throw new Error("El servidor no responde, vuelva a intentarlo más tarde");
   }
 }
 
+/**
+ * llama a la api para eliminar un producto
+ */
 export async function deleteProduct(productId, token) {
   try {
     //Envío a products el productId del producto que quiero borrar
@@ -52,6 +57,9 @@ export async function deleteProduct(productId, token) {
   }
 }
 
+/**
+ * llama a la api para actualizar un producto
+ */
 export async function updateProduct(
   productId,
   name,
@@ -101,6 +109,11 @@ export async function updateProduct(
   }
 }
 
+/**
+ * llama a la api para actualizar los tag del usuario
+ * si no existe lo crea, si existe añade su id
+ * retorna una lista de tagsId validos para el usuario
+ */
 async function updateTagHandler(tagsString, token) {
   try {
     const tagsId = [];
@@ -110,7 +123,7 @@ async function updateTagHandler(tagsString, token) {
     // Primero, agregamos los tags y almacenamos sus ids
     for (const tag of tags) {
       // Busca si el tag ya existe en la lista
-      const tagFetch = await getFilterTag(tag.trim());
+      const tagFetch = await getTag(tag.trim());
 
       const existingTag = tagFetch.find((t) => t.tag === tag.trim());
 
@@ -128,6 +141,9 @@ async function updateTagHandler(tagsString, token) {
   }
 }
 
+/**
+ * llama a la api para crear un tag, retorna ese tag
+ */
 async function addTag(tag, token) {
   const response = await fetch("http://localhost:8000/api/tags", {
     method: "POST",
@@ -142,6 +158,7 @@ async function addTag(tag, token) {
     throw new Error("Error al crear el tag");
   }
 
-  const data = await response.json();
-  return data;
+  const tagResponse = await response.json();
+  return tagResponse;
 }
+
