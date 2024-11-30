@@ -3,6 +3,8 @@ import { fireEvent } from "./fireEvent.js";
 export const mailRegExp =
   "[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}";
 
+export const imageDefault = "../assets/product-photos/no_image.jpg"
+
   /**
  * Comprueba si el usuario esta logueado, devuelve un bool
  */
@@ -134,4 +136,21 @@ export async function getTagId(tagToLocate) {
   // Obtengo los datos de la respuesta
   const tagFind = await response.json();
   return tagFind[0].tag;
+}
+
+
+/**
+ * Pasa a mayúscula la primera letra de la palabra
+ * retorna una palabra con la primera letra en mayuscula
+ */
+export function capitalize(word){  
+
+const firstLetter = word.charAt(0)
+
+const firstLetterUpper = firstLetter.toUpperCase()
+
+const lastLetters = word.slice(1)
+
+const capitalizedWord = firstLetterUpper + lastLetters
+return capitalizedWord
 }

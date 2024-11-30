@@ -1,5 +1,5 @@
 import { fireEvent } from "../utils/fireEvent.js";
-import { writeNotification } from "../utils/utils.js";
+import { writeNotification,capitalize } from "../utils/utils.js";
 import { createProduct } from "./create-product-model.js";
 
 /**
@@ -20,9 +20,7 @@ export function createProductController(createProductContainer) {
       const description = descriptionElement.value;
 
       const imageElement = createProductContainer.querySelector("#image"); //si image no está informado le daremos una imágen por defecto
-      if (imageElement.value === "") {
-        imageElement.value = "../assets/product-photos/no_image.jpg";
-      }
+    
       const image = imageElement.value;
 
       const typeProductElement =
@@ -97,6 +95,6 @@ async function handleProductCreation(
  * Recibe un string con tags separados con comas y devuelve una lista de strings
  */
 function separateTags(tagsString) {
-  const listOfTags = tagsString.split(",").map((item) => item.trim());
+  const listOfTags = tagsString.split(",").map((item) => capitalize(item.trim()));
   return listOfTags;
 }

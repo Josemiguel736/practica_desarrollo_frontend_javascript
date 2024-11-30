@@ -14,6 +14,7 @@ export async function createProduct(
   token
 ) {
     try {
+      
         const tagsList = await createTagIdList(tags, token);
 
   // Luego, hacemos el POST para crear el producto
@@ -84,8 +85,7 @@ async function addTag(tag, token) {
  */
 async function createTagIdList(tags, token) {
   try {
-    const tagsId = [];
-    
+    const tagsId = [];    
 
     // Primero, agregamos los tags y almacenamos sus ids
     for (const tag of tags) {

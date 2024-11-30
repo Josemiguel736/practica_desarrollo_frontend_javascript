@@ -1,4 +1,4 @@
-import { getTag } from "../utils/utils.js";
+import { capitalize, getTag } from "../utils/utils.js";
 
 /**
  * Obtiene un producto y el usuario que lo creoy los retorna
@@ -19,7 +19,7 @@ export async function getProduct(productId) {
     return product;
 
   } catch (error) {
-    throw new Error("El servidor no responde, vuelva a intentarlo más tarde");
+    throw error;
   }
 }
 
@@ -123,9 +123,9 @@ async function updateTagHandler(tagsString, token) {
     // Primero, agregamos los tags y almacenamos sus ids
     for (const tag of tags) {
       // Busca si el tag ya existe en la lista
-      const tagFetch = await getTag(tag.trim());
+      const tagFetch = await getTag(capitalize(tag.trim()) );
 
-      const existingTag = tagFetch.find((t) => t.tag === tag.trim());
+      const existingTag = tagFetch.find((t) => t.tag === capitalize(tag.trim()));
 
       if (existingTag) {
         tagsId.push(`%${existingTag.id}%`); // Si existe, agrega su id

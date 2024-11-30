@@ -1,0 +1,332 @@
+{
+  "users": [
+    {
+      "username": "user1@example.com",
+      "password": "$2b$10$ALqS118/TnqeP6k3GoR/R.MljIQgbE24LfUmRkNaejYsZlnZqJF52",
+      "id": 1
+    },
+    {
+      "username": "user2@example.com",
+      "password": "$2b$10$ALqS118/TnqeP6k3GoR/R.MljIQgbE24LfUmRkNaejYsZlnZqJF52",
+      "id": 2
+    }
+  ],
+  "tweets": [],
+  "products": [
+    {
+      "name": "Cámara de fotos",
+      "description": "Cámara de fotos vintage ",
+      "image": "https://ams3.digitaloceanspaces.com/graffica/2023/03/nordwood-themes-F3Dde_9thd8-unsplash-1024x683.jpg",
+      "typeProduct": "Vender",
+      "price": "400",
+      "tagsList": [
+        "%1%",
+        "%2%"
+      ],
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:28:12.916Z",
+      "id": 1
+    },
+    {
+      "name": "Videocámara",
+      "description": "Busco una videocámara profesional",
+      "image": "https://i.blogs.es/44d593/z7/450_1000.jpg",
+      "typeProduct": "Comprar",
+      "price": 1700,
+      "tagsList": [
+        "%3%"
+      ],
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:32:16.102Z",
+      "id": 2
+    },
+    {
+      "name": "Toyota Yaris",
+      "description": "Su diseño es más audaz, su interior de mucha más calidad que antes y su equipamiento es mucho más extenso ya desde las versiones de acceso. Por si fuera poco, su dinámica de conducción es mucho más refinada que antes, lo que le convierte en una opción de mucho peso dentro del segmento de los urbanos.",
+      "image": "https://fotos.quecochemecompro.com/toyota-yaris/toyota-yaris-vista-lateral-dinamica.jpg?size=750x400",
+      "typeProduct": "Vender",
+      "price": "20000",
+      "tagsList": [
+        "%4%",
+        "%5%"
+      ],
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:34:54.313Z",
+      "id": 3
+    },
+    {
+      "name": "Peugeot 208",
+      "description": "Disponible con mucha carga tecnológica, el 208 sigue manteniendo ese toque dinámico de todo Peugeot, convirtiéndolo en una de las mejores opciones del segmento.",
+      "image": "https://fotos.quecochemecompro.com/peugeot-208/peugeot-208-vista-delantera-dinamica.jpeg?size=750x400",
+      "typeProduct": "Vender",
+      "price": 25000,
+      "tagsList": [
+        "%4%",
+        "%5%"
+      ],
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:35:40.346Z",
+      "id": 4
+    },
+    {
+      "name": "Renault Clio",
+      "description": "el Renault Clio se puede calificar sin temor a equivocarse como uno de esos \"todo en 1\", un coche que sirve para todo y que no tiene evidentes defectos.",
+      "image": "https://fotos.quecochemecompro.com/renault-clio/renault-clio-azul-dinamismo-urbano.jpg?size=750x400",
+      "typeProduct": "Comprar",
+      "price": 17000,
+      "tagsList": [
+        "%4%",
+        "%5%"
+      ],
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:36:42.966Z",
+      "id": 5
+    },
+    {
+      "name": "Nintendo GameCube",
+      "description": "Busco Nintendo GameCube",
+      "image": "https://mediamaster.vandal.net/i/620x347/8-2018/201883013462_2.jpg",
+      "typeProduct": "Comprar",
+      "price": 200,
+      "tagsList": [
+        "%6%",
+        "%7%"
+      ],
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:39:20.314Z",
+      "id": 6
+    },
+    {
+      "name": "Nintendo Switch",
+      "description": "Busco Nintendo Switch en buen estado",
+      "image": "https://es.digitaltrends.com/wp-content/uploads/2022/04/nintendo-switch.jpg?fit=720%2C720&p=1",
+      "typeProduct": "Comprar",
+      "price": 200,
+      "tagsList": [
+        "%6%",
+        "%8%"
+      ],
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:41:09.243Z",
+      "id": 7
+    },
+    {
+      "name": "Servicios de informática",
+      "description": "Servicio de reparación de ordenadores a domicilio",
+      "image": "",
+      "typeProduct": "Vender",
+      "price": 0,
+      "tagsList": [
+        "%9%",
+        "%10%"
+      ],
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:42:39.159Z",
+      "id": 8
+    },
+    {
+      "name": "Portátil MSI",
+      "description": " Intel Core i7-12650H 16GB 1TB SSD RTX 3050",
+      "image": "https://thumb.pccomponentes.com/w-530-530/articles/1084/10846498/1331-msi-thin-15-b12uc-1839xes-intel-core-i7-12650h-16gb-1tb-ssd-rtx-3050-156.jpg",
+      "typeProduct": "Comprar",
+      "price": 900,
+      "tagsList": [
+        "%11%",
+        "%9%",
+        "%12%",
+        "%13%"
+      ],
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:44:44.079Z",
+      "id": 9
+    },
+    {
+      "name": "Busco coche",
+      "description": "Busco coche de segunda mano con pocos kilometros",
+      "image": "",
+      "typeProduct": "Comprar",
+      "price": 1000,
+      "tagsList": [
+        "%4%",
+        "%5%"
+      ],
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:46:03.966Z",
+      "id": 10
+    },
+    {
+      "name": "Suzuki GSX-S125",
+      "description": "Una atractiva fusión de tecnología, estilo y prestaciones. Una motocicleta diseñada para la diversión y la emoción. Plena de cualidades para los más independientes y orgullosos. La libertad te llama. La libertad te llama. Tu GSX-S125 te está esperando.",
+      "image": "https://moto.suzuki.es/storage/images/3lxmqrhnsutewbuafjizmjomxgkavk10zbfxnzwc.jpg",
+      "typeProduct": "Vender",
+      "price": "4900",
+      "tagsList": [
+        "%14%",
+        "%5%",
+        "%15%"
+      ],
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:49:01.613Z",
+      "id": 11
+    },
+    {
+      "name": "Busco moto",
+      "description": "Busco motocicleta barata y en buen estado",
+      "image": "",
+      "typeProduct": "Comprar",
+      "price": "1000",
+      "tagsList": [
+        "%15%",
+        "%5%"
+      ],
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:57:16.818Z",
+      "id": 12
+    },
+    {
+      "name": "PC gaming",
+      "description": "Pc gaming MSI",
+      "image": "https://asset.msi.com/resize/image/global/product/product_1729760259114832d434b0276686063857f3664e01.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+      "typeProduct": "Vender",
+      "price": "1200",
+      "tagsList": [
+        "%12%",
+        "%9%"
+      ],
+      "userId": 2,
+      "updatedAt": "2024-11-30T22:19:21.315Z",
+      "id": 13
+    },
+    {
+      "name": "VOGE 125R",
+      "description": " naked 125 R de corte deportivo con un alto nivel de equipamiento y mucha tecnología punta en su nuevo motor con una potencia de 15 CV",
+      "image": "https://vogespain.es/wp-content/uploads/2023/03/voge-125r-azul-11.jpg",
+      "typeProduct": "Vender",
+      "price": 3000,
+      "tagsList": [
+        "%5%",
+        "%15%"
+      ],
+      "userId": 2,
+      "updatedAt": "2024-11-30T22:20:53.882Z",
+      "id": 14
+    },
+    {
+      "name": "Busco ordenador",
+      "description": "Busco ordenador gaming con 2TB de disco duro",
+      "image": "",
+      "typeProduct": "Comprar",
+      "price": 500,
+      "tagsList": [
+        "%9%"
+      ],
+      "userId": 2,
+      "updatedAt": "2024-11-30T22:21:51.646Z",
+      "id": 15
+    }
+  ],
+  "tags": [
+    {
+      "tag": "Cámara",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:27:24.839Z",
+      "id": 1
+    },
+    {
+      "tag": "Fotografía",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:27:24.898Z",
+      "id": 2
+    },
+    {
+      "tag": "Videocámara",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:32:16.070Z",
+      "id": 3
+    },
+    {
+      "tag": "Coche",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:34:44.692Z",
+      "id": 4
+    },
+    {
+      "tag": "Motor",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:34:44.753Z",
+      "id": 5
+    },
+    {
+      "tag": "Nintendo",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:39:20.220Z",
+      "id": 6
+    },
+    {
+      "tag": "Videoconsola",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:39:20.281Z",
+      "id": 7
+    },
+    {
+      "tag": "Switch",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:41:09.211Z",
+      "id": 8
+    },
+    {
+      "tag": "Ordenador",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:42:39.063Z",
+      "id": 9
+    },
+    {
+      "tag": "Servicios",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:42:39.126Z",
+      "id": 10
+    },
+    {
+      "tag": "Portatil",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:44:43.892Z",
+      "id": 11
+    },
+    {
+      "tag": "Pc",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:44:43.984Z",
+      "id": 12
+    },
+    {
+      "tag": "Msi",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:44:44.047Z",
+      "id": 13
+    },
+    {
+      "tag": "Suzuki",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:48:50.835Z",
+      "id": 14
+    },
+    {
+      "tag": "Moto",
+      "userId": 1,
+      "updatedAt": "2024-11-30T21:48:50.927Z",
+      "id": 15
+    },
+    {
+      "tag": "Lifestile3",
+      "userId": 1,
+      "updatedAt": "2024-11-30T22:14:14.209Z",
+      "id": 16
+    },
+    {
+      "tag": "Cars",
+      "userId": 1,
+      "updatedAt": "2024-11-30T22:14:15.401Z",
+      "id": 17
+    }
+  ]
+}

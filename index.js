@@ -51,12 +51,15 @@ document.addEventListener("DOMContentLoaded", () => {
   //filtramos los productos
   filterContainer.addEventListener("submit", async (event) => {
     event.preventDefault();
+    
+    loadingSpinner(productContainer);   
     const products = await filterProductsController(filterContainer);
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.set("page", 1);
     history.pushState(null, "", `?${searchParams.toString()}`);
     paginationProductsController(paginationContainer);
-    await showProducts(productContainer, products);
+    await showProducts(productContainer, products);  
+
   });
 
   filterContainer.addEventListener("notification", async (event) => {
@@ -74,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
       event.target.classList.contains("next-page")
     ) {
       event.preventDefault();
+      loadingSpinner(productContainer);   
 
       const searchParams = new URLSearchParams(window.location.search);
       let currentPage = parseInt(searchParams.get("page")) || 1;

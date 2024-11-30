@@ -7,8 +7,8 @@ import { drawSpinner } from "./spinner.views.js";
 export const loadingSpinner = (container) => {
   try {
     //busca el nodo donde cargar el spinner
+    
     let spinner = container.querySelector(".loading-spinner");
-
     // Si no existe, lo creamos
     if (!spinner) {
       spinner = document.createElement("div");

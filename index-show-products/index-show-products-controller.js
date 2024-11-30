@@ -38,9 +38,9 @@ function drawProducts(products, productContainer) {
  */
 export async function showProducts(productContainer, products) {
   //Iniciamos la ruleta de carga
-  fireEvent("loading-spinner", productContainer);
-
+  
   try {
+    fireEvent("loading-spinner", productContainer);
     const page = getPage();
     //Comprobamos si hemos recibido ya los productos o no, en caso negativo los buscamos
     let productsAndEnd;
@@ -152,7 +152,8 @@ export function paginationProductsController(paginationContainer) {
 function isTheLastPage(end, finalPage) {
   if (end) {
     const page = getPage();
-    if (page > finalPage) {
+    finalPage +=1
+    if (page > finalPage && page!=1) {
       let endPage = page - 1;
       while (endPage > finalPage) {
         endPage -= 1;

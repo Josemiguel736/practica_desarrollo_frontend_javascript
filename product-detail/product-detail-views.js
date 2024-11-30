@@ -1,3 +1,4 @@
+import { imageDefault } from "../utils/utils.js";
 
 /**
  * Pinta un producto
@@ -7,11 +8,9 @@ export const buildDetailProduct = (product, productTags) => {
   const tagString = productTags.join(", ");
   const newProduct = document.createElement("div");
   newProduct.setAttribute("class", "product-detail");
-  console.log(product.image);
-
   newProduct.innerHTML = `        
         
-        <img src=${product.image} alt=${product.name}>
+        <img src=${product.image || imageDefault} alt=${product.name}>
         <h3>${product.name}</h3>
         <span class="description">${product.description}</span>
         <span>${product.typeProduct}</span>
@@ -54,9 +53,9 @@ export const buildNoProduct = () => {
  * Pinta el formulario para editar un producto
  */
 export const buildEditProductForm = (product, productTags) => {
-  if (product.image === "../assets/product-photos/no_image.jpg") {
-    product.image = "";
-  }
+
+ 
+  
   return `
     <section>
         <div class="form-edit">
@@ -69,7 +68,7 @@ export const buildEditProductForm = (product, productTags) => {
         <textarea name="description"  id="description" cols="30" rows="10" required>${product.description}</textarea>
         
         <label for="image">Imágen</label>
-        <input type="text" name="image" value="${product.image}" id="image">
+        <input type="text" name="image" value="${product.image }" id="image">
         
         <label for="type-product">Que quieres hacer</label>
         <select class="input" id="typeProduct" name="type-product">

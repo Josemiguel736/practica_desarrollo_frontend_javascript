@@ -43,13 +43,7 @@ export async function productDetailController(
       );
       productDetailContainer.appendChild(buildNoProduct());
     } else {
-      fireEvent(
-        "notification",
-        productDetailContainer,
-        `${error.message} `,
-        "big",
-        "error"
-      );
+      
       productDetailContainer.appendChild(buildNoProduct());
     }
   } finally {
@@ -221,9 +215,7 @@ async function handlerEditProduct(
       const description = descriptionElement.value;
 
       const imageElement = productContainer.querySelector("#image");
-      if (imageElement.value === "") {
-        imageElement.value = "../assets/product-photos/no_image.jpg";
-      }
+  
       const image = imageElement.value;
 
       const typeProduct = typeProductElement.value;

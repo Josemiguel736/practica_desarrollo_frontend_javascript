@@ -1,20 +1,20 @@
+import { imageDefault } from "../utils/utils.js";
+
 /**
  * Pinta un producto
  */
-export const buildProduct = (product, page) => {
+export const buildProduct = (product) => {
   //convierto la lista de tags a un string
   const tagString = product.tags.join(", ");
   const tagQuery = product.tags.join("%2C");
 
   //creo un nodo con mi html dentro
   const newProduct = document.createElement("div");
-  if (product.image === "") {
-    product.image = "assets/product-photos/no_image.jpg";
-  }
+
   newProduct.innerHTML = `
         
         <a class="product" href="product-detail.html?id=${product.id}&tags=${tagQuery}">
-        <img src=${product.image} alt=${product.name}>
+        <img src=${product.image || imageDefault} alt=${product.name}>
         <h3>${product.name}</h3>
         <span>${product.description}</span>
         <span>${product.typeProduct}</span>
